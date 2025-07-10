@@ -1,0 +1,22 @@
+[project]
+name = "tidycode"
+version = "0.1.0"
+description = "Kit minimal pour automatiser le lint, format, type-checking, changelog et hooks dans vos projets Python"
+authors = [
+    {name = "Ephraïm SEDDOR",email = "seddorephraim7@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "tidycode", from = "src"}]
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.2.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
