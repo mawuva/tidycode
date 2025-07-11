@@ -15,6 +15,8 @@ def orig_config():
 
 @pytest.fixture
 def orig_config_with_hooks(orig_config):
-    orig_config["repos"].append(HOOKS["linting"]["yaml"])
-    orig_config["repos"].append(HOOKS["format_black"]["yaml"])
+    orig_config["repos"] += [
+        HOOKS["linting"]["yaml"],
+        HOOKS["format_black"]["yaml"]
+    ]
     return orig_config
