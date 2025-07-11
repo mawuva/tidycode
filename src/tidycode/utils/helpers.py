@@ -11,7 +11,6 @@ def run_command(command: list[str], check: bool = True) -> None:
     print(f"📦 Running: {' '.join(command)}")
     subprocess.run(command, check=check)
 
-
 def write_file_if_missing(path: Path, content: str) -> bool:
     """Write a file if it doesn't exist."""
     if not path.exists():
