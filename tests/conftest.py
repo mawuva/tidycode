@@ -20,3 +20,4 @@ def orig_config_with_hooks(orig_config):
         HOOKS["format_black"]["yaml"]
     ]
     return orig_config
+

@@ -24,7 +24,7 @@ def setup_commitizen(pyproject_path: Path = PYPROJECT):
     try:
         run_command(["cz", "init", "--name", "cz_conventional_commits", "--yes"])
     except Exception as e:
-        print(f"⚠️ Commitizen CLI init failed (optional): {e}")
+        print(f"⚠️ Commitizen CLI init failed: {e}")
     return True
 
 
