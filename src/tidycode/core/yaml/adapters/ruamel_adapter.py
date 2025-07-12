@@ -48,4 +48,4 @@ class RuamelYAMLAdapter(YAMLAdapter):
 
         if isinstance(repos, CommentedSeq):
             for i in range(len(repos) - 1):
-                repos.yaml_set_comment_before_after_key(i + 1, before='\n')
+                repos.yaml_set_comment_before_after_key(i + 1, before='\n', after='\n')

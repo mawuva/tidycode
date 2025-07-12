@@ -10,10 +10,10 @@ from .constants import (
     TARGETS,
 )
 
-from .hooks_definitions import HOOKS
+from .hooks.hooks_definitions import HOOKS
 from .tools_metadata import TOOLS_METADATA
 
-from .hooks_helpers import (
+from .hooks.hooks_helpers import (
     get_installed_hook_keys,
     add_hooks,
     remove_hooks,
@@ -32,7 +32,7 @@ from .helpers import (
     toml_load,
 )
 
-from .toml_helpers import (
+from .toml.toml_helpers import (
     load_toml_file,
     save_toml_file,
     has_tool_section,
@@ -42,13 +42,13 @@ from .toml_helpers import (
     remove_tool_section_and_return,
 )
 
-from .toml_config_editor import (
+from .toml.toml_config_editor import (
     inject_toml_config,
     inject_tool_config,
     inject_tool_config_in_file,
 )
 
-from .toml_config_diff import (
+from .toml.toml_config_diff import (
     diff_configs,
     format_config_diff,
 )
@@ -90,7 +90,7 @@ __all__ = [
     "inject_toml_config",
     "inject_tool_config",
     "inject_tool_config_in_file",
-    
+
     "diff_configs",
     "format_config_diff",
 ]

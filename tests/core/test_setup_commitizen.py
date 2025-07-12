@@ -34,7 +34,7 @@ def test_setup_commitizen_injects_config(tmp_path, fake_run_command):
 
     config = load_toml_file(path)
     assert config["tool"]["commitizen"]["name"] == "cz_conventional_commits"
-    assert ["cz", "init", "--name", "cz_conventional_commits", "--yes"] in calls
+    assert ["cz", "init", "--", "--name", "cz_conventional_commits", "--yes"] in calls
 
 
 def test_setup_commitizen_dry_run(tmp_path, capsys):

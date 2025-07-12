@@ -4,8 +4,8 @@ Helper functions for toml files
 
 from pathlib import Path
 from typing import Any, Dict
-from .constants import PYPROJECT_PATH
-from .helpers import toml_load, toml_dump
+from ..constants import PYPROJECT_PATH
+from ..helpers import toml_load, toml_dump
 from tomlkit import table
 
 def load_toml_file(path: Path = None) -> Dict[str, Any]:
@@ -20,7 +20,7 @@ def save_toml_file(data: Dict[str, Any], path: Path = None) -> None:
     """Save the toml file."""
     toml_file_path = path or PYPROJECT_PATH
     with toml_file_path.open("w", encoding="utf-8") as f:
-        f.write(toml_dump(data))
+        f.write(toml_dump(data) + "\n")
 
 def has_tool_section(data: Dict[str, Any], tool: str) -> bool:
     """Check if a tool section exists in toml file."""
@@ -57,4 +57,3 @@ def remove_tool_section_and_return(
     if "tool" in data and tool in data["tool"]:
         del data["tool"][tool]
     return data
-

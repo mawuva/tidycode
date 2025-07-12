@@ -7,13 +7,12 @@ from tidycode.core.yaml.utils import get_manager
 from tidycode.core.yaml.manager import YAMLManager
 from tidycode.core.yaml.adapters.pyyaml_adapter import PyYAMLAdapter
 from tidycode.core.yaml.adapters.ruamel_adapter import RuamelYAMLAdapter
-from tidycode.core.yaml.adapters.base import YAMLAdapter
 
 
-def test_get_manager_default_returns_pyyaml():
+def test_get_manager_default_returns_ruamel_adapter():
     manager = get_manager()
     assert isinstance(manager, YAMLManager)
-    assert isinstance(manager.adapter, PyYAMLAdapter)
+    assert isinstance(manager.adapter, RuamelYAMLAdapter)
 
 
 def test_get_manager_with_string_ruamel():

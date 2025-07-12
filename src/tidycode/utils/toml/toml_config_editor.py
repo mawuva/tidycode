@@ -19,8 +19,8 @@ def inject_toml_config(
     """
     Inject a configuration into the existing TOML content.
     Inject potentially multiple configurations into the tool key of a new_data dict.
-    
-    It reads the tool key in new_data["tool"] with potentially multiple tools (sections), 
+
+    It reads the tool key in new_data["tool"] with potentially multiple tools (sections),
     and injects each of these sections into updated["tool"].
 
     - `overwrite=False` will raise an error if the section exists.
@@ -94,7 +94,7 @@ def inject_tool_config_in_file(
     High-level function to manipulate the toml file directly.
     Inject the config for a tool in the [tool.<tool_name>] section of toml file.
     If config is a dict, it will be injected into the tool key of the toml file.
-    
+
     Parameters:
     - toml_file_path: Path to the toml file.
     - tool_name: Name of the tool to inject the config for.

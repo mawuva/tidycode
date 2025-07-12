@@ -23,9 +23,9 @@ def setup_commitizen(
     """
     Injects Commitizen configuration into pyproject.toml and runs cz init.
     """
-    pyproject_path = pyproject_path or PYPROJECT_PATH   
+    pyproject_path = pyproject_path or PYPROJECT_PATH
     run_command_fn = run_command_fn or run_command
-    
+
     if not pyproject_path.exists():
         print(f"❌ {pyproject_path} not found")
         return False
@@ -52,9 +52,8 @@ def setup_commitizen(
     save_toml_file(updated, pyproject_path)
     print("✅ Commitizen config added to pyproject.toml")
 
-    # Run cz init
     try:
-        run_command_fn(["cz", "init", "--name", "cz_conventional_commits", "--yes"])
+        run_command_fn(["cz", "init", "--", "--name", "cz_conventional_commits", "--yes"])
     except Exception as e:
         print(f"⚠️ Commitizen CLI init failed: {e}")
 

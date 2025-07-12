@@ -30,7 +30,9 @@ TOOLS_METADATA = {
             "tool": {
                 "black": {
                     "line-length": 88,
-                    "target-version": ["py38"]
+                    "target-version": ["py38"],
+                    "skip-string-normalization": False,
+                    "preview": True,
                 }
             }
         }
