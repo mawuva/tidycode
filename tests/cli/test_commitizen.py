@@ -12,5 +12,6 @@ def test_commitizen_setup(tmp_path):
     pyproject.write_text("[tool.poetry]\nname = \"demo\"\n")
 
     result = runner.invoke(app, ["commitizen", "setup", "--pyproject", str(pyproject)])
+    print(result.output) 
     assert result.exit_code == 0
     assert "[tool.commitizen]" in pyproject.read_text()

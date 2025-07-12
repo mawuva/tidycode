@@ -3,7 +3,7 @@ Conftest for tests
 """
 
 import pytest
-from tidycode.utils.hook_definitions import HOOKS
+from tidycode.utils import HOOKS
 
 @pytest.fixture
 def temp_config_file(tmp_path):

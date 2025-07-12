@@ -95,7 +95,7 @@ def test_clean_removes_hooks(tmp_path):
 
 def test_sync_installs_hooks_when_none(tmp_path, patch_run):
     config_path = tmp_path / ".pre-commit-config.yaml"
-    config_path.write_text("")  # Empty config
+    config_path.write_text("") 
     result = runner.invoke(app, ["hooks", "sync", "--config-path", str(config_path)])
     assert result.exit_code == 0
     assert ["pre-commit", "install"] in patch_run

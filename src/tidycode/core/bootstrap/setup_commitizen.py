@@ -1,7 +1,7 @@
 """
 Setup Commitizen
 """
-from typing import Callable, Optional
+from typing import Callable
 from pathlib import Path
 
 from tidycode.utils import (

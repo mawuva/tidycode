@@ -10,12 +10,10 @@ from .constants import (
     TARGETS,
 )
 
-from .hook_definitions import HOOKS
+from .hooks_definitions import HOOKS
 from .tools_metadata import TOOLS_METADATA
 
 from .hooks_helpers import (
-    load_config,
-    save_config,
     get_installed_hook_keys,
     add_hooks,
     remove_hooks,
@@ -65,8 +63,6 @@ __all__ = [
     "EXCLUDE_DIRS",
     "TARGETS",
 
-    "load_config",
-    "save_config",
     "get_installed_hook_keys",
     "add_hooks",
     "remove_hooks",

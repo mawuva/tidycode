@@ -2,25 +2,8 @@
 Helpers for hooks
 """
 
-from pathlib import Path
-from typing import Optional, Iterator
-import yaml
-from .hook_definitions import HOOKS
-from .constants import CONFIG_FILE_PATH
-
-def load_config(path: Optional[Path] = None) -> dict:
-    """Load the config from the given path or the default path."""
-    config_path = path or CONFIG_FILE_PATH
-    if config_path.exists():
-        with config_path.open("r", encoding="utf-8") as f:
-            return yaml.safe_load(f) or {"repos": []}
-    return {"repos": []}
-
-def save_config(config: dict, path: Optional[Path] = None) -> None:
-    """Save the config to the given path or the default path."""
-    config_path = path or CONFIG_FILE_PATH  
-    with config_path.open("w", encoding="utf-8") as f:
-        yaml.safe_dump(config, f, sort_keys=False)
+from typing import Iterator
+from .hooks_definitions import HOOKS
 
 def get_installed_hook_keys(config: dict) -> list[str]:
     """Get the installed hook keys from the config."""

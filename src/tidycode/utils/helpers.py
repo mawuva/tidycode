@@ -13,11 +13,13 @@ def run_command(command: list[str], check: bool = True) -> None:
     print(f"📦 Running: {' '.join(command)}")
     subprocess.run(command, check=check)
 
+
 def print_msg(msg: str, quiet: bool = False, debug: bool = False) -> None:
     if debug:
         print("[DEBUG]", msg)
     elif not quiet:
         print(f"💬 {msg}")
+
 
 def write_file_if_missing(path: Path, content: str) -> bool:
     """Write a file if it doesn't exist."""
@@ -29,6 +31,7 @@ def write_file_if_missing(path: Path, content: str) -> bool:
     else:
         print(f"⚠️  File already exists: {path}")
         return False
+
     
 def ask_checkbox(message: str, choices: List[Tuple[str, str]]) -> List[str]:
     """Ask a checkbox question."""

@@ -8,15 +8,15 @@ import typer
 from tidycode.core.bootstrap import setup_hooks, setup_hooks_minimal
 from tidycode.utils import (
     run_command,
-    load_config,
     get_installed_hook_keys,
     HOOKS,
     CONFIG_FILE_PATH,
     remove_hooks,
-    save_config,
     print_msg,
     add_hooks,
 )
+from tidycode.core.yaml import yaml_load, yaml_save
+
 
 app = typer.Typer(help="Setup hooks")
 
@@ -52,7 +52,7 @@ def update():
 @app.command("list-installed")
 def list_installed(config_path: Path = CONFIG_FILE_PATH):
     """List installed hooks from config"""
-    config = load_config(config_path)
+    config = yaml_load(config_path)
     keys = get_installed_hook_keys(config)
     if not keys:
         typer.echo("❌ No hooks installed in config.")
@@ -71,10 +71,10 @@ def list_available():
 @app.command()
 def clean(config_path: Path = CONFIG_FILE_PATH):
     """Remove all hooks from the config file"""
-    config = load_config(config_path)
+    config = yaml_load(config_path)
     keys = get_installed_hook_keys(config)
     config = remove_hooks(config, keys)
-    save_config(config, config_path)
+    yaml_save(config, config_path)
     typer.echo(f"🧹 Removed {len(keys)} hooks from {config_path.name}.")
 
 @app.command()
@@ -91,8 +91,11 @@ def sync(
 ):
     """Install hooks if none, else update"""
     print_msg(f"Loading config from {config_path}", quiet, debug)
-    config = load_config(config_path)
+    config = yaml_load(config_path)
     installed = get_installed_hook_keys(config)
+
+    if config is None:
+        config = {"repos": []}
 
     if installed:
         print_msg("Hooks installed, updating...", quiet, debug)
@@ -102,7 +105,7 @@ def sync(
         print_msg("No hooks installed, installing...", quiet, debug)
         keys_to_add = [k for k in HOOKS if "yaml" in HOOKS[k]]
         config = add_hooks(config, keys_to_add)
-        save_config(config, config_path)
+        yaml_save(config, config_path)
         run_command(["pre-commit", "install"])
         print_msg("Hooks installed.", quiet, debug)
 
@@ -115,10 +118,10 @@ def reset(
 ):
     """Remove all hooks config and uninstall hooks"""
     print_msg(f"Resetting hooks, cleaning config {config_path}...", quiet, debug)
-    config = load_config(config_path)
+    config = yaml_load(config_path)
     keys = get_installed_hook_keys(config)
     config = remove_hooks(config, keys)
-    save_config(config, config_path)
+    yaml_save(config, config_path)
     print_msg("Config cleaned.", quiet, debug)
 
     print_msg("Uninstalling hooks...", quiet, debug)

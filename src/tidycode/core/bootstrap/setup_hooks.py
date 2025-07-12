@@ -4,13 +4,12 @@ Run hooks
 
 from pathlib import Path
 from typing import Callable, Optional
+from tidycode.core.yaml import yaml_load, yaml_save
 from tidycode.utils import (
     HOOKS,
-    load_config,
     get_installed_hook_keys,
     add_hooks,
     remove_hooks,
-    save_config,
     ask_checkbox,
     run_command,
     ask_confirm,
@@ -24,7 +23,7 @@ def setup_hooks(
     ask_checkbox_fn = ask_checkbox_fn or ask_checkbox
     run_command_fn = run_command_fn or run_command
 
-    config = load_config(config_path)
+    config = yaml_load(config_path)
     installed_keys = get_installed_hook_keys(config)
 
     if installed_keys:
@@ -44,7 +43,7 @@ def setup_hooks(
         config = add_hooks(config, to_add)
         print(f"➕ Added hooks: {[HOOKS[k]['name'] for k in to_add]}")
 
-    save_config(config, config_path)
+    yaml_save(config, config_path)
     print("✅ .pre-commit-config.yaml updated.")
 
     if ask_checkbox_fn("Run `pre-commit autoupdate`?", [("yes", "Yes")]):
@@ -59,11 +58,11 @@ def setup_hooks_minimal(
     run_command_fn = run_command_fn or run_command
     ask_confirm_fn = ask_confirm_fn or ask_confirm
 
-    config = load_config(config_path)
+    config = yaml_load(config_path)
 
     keys_to_add = [k for k in HOOKS if "yaml" in HOOKS[k]]
     config = add_hooks(config, keys_to_add)
-    save_config(config, config_path)
+    yaml_save(config, config_path)
 
     print("✅ All hooks added to .pre-commit-config.yaml.")
     
