@@ -5,6 +5,7 @@ Test the YAML manager.
 from tidycode.core.yaml import YAMLManager, PyYAMLAdapter, RuamelYAMLAdapter
 from pathlib import Path
 
+
 def test_manager_with_pyyaml():
     manager = YAMLManager(PyYAMLAdapter())
     data = {"hello": "world"}
@@ -30,4 +31,3 @@ def test_manager_file_roundtrip(tmp_path: Path):
     manager.save_file(d, file_path)
     reloaded = manager.load_file(file_path)
     assert reloaded == d
-

@@ -1,6 +1,7 @@
 """
 Test utils functions
 """
+
 import subprocess
 
 import pytest
@@ -13,6 +14,7 @@ from tidycode.utils import (
     ask_confirm,
 )
 
+
 def test_run_command_default_check(mocker: MockerFixture, capsys):
     """Test run_command with default check=True."""
     mock_run = mocker.patch("subprocess.run")
@@ -24,6 +26,7 @@ def test_run_command_default_check(mocker: MockerFixture, capsys):
     captured = capsys.readouterr()
     assert "📦 Running: echo hello" in captured.out
 
+
 def test_run_command_check_false(mocker: MockerFixture):
     """Test run_command with check=False."""
     mock_run = mocker.patch("subprocess.run")
@@ -33,6 +36,7 @@ def test_run_command_check_false(mocker: MockerFixture):
 
     mock_run.assert_called_once_with(command, check=False)
 
+
 def test_run_command_raises_error(mocker: MockerFixture):
     """Test run_command raises CalledProcessError."""
     mock_run = mocker.patch("subprocess.run")
@@ -41,6 +45,7 @@ def test_run_command_raises_error(mocker: MockerFixture):
     with pytest.raises(subprocess.CalledProcessError):
         run_command(["badcommand"])
 
+
 def test_write_file_if_missing(tmp_path):
     """Test the write_file_if_missing function."""
     file = tmp_path / "file.txt"
@@ -48,6 +53,7 @@ def test_write_file_if_missing(tmp_path):
     assert file.read_text() == "abc\n"
     # Second call returns False
     assert write_file_if_missing(file, "def") is False
+
 
 def test_ask_checkbox(mocker: MockerFixture):
     """Test the ask_checkbox function."""
@@ -58,6 +64,7 @@ def test_ask_checkbox(mocker: MockerFixture):
     result = ask_checkbox("Test", [("a", "A"), ("b", "B")])
     assert result == ["a"]
 
+
 def test_ask_checkbox_empty_selection(mocker: MockerFixture):
     """Test ask_checkbox when user selects nothing (returns None)."""
     mock_ask = mocker.MagicMock()
@@ -67,6 +74,7 @@ def test_ask_checkbox_empty_selection(mocker: MockerFixture):
     result = ask_checkbox("Test", [("a", "A"), ("b", "B")])
     assert result == []
 
+
 def test_ask_confirm(mocker: MockerFixture):
     """Test the ask_confirm function."""
     mock_ask = mocker.MagicMock()
@@ -75,6 +83,7 @@ def test_ask_confirm(mocker: MockerFixture):
 
     result = ask_confirm("Test")
     assert result is True
+
 
 def test_ask_confirm_negative(mocker: MockerFixture):
     """Test ask_confirm when user declines (False)."""

@@ -10,6 +10,7 @@ from .adapters.ruamel_adapter import RuamelYAMLAdapter
 from .adapters.pyyaml_adapter import PyYAMLAdapter
 from tidycode.utils import CONFIG_FILE_PATH
 
+
 def get_manager(adapter: Union[str, YAMLAdapter, None] = None) -> YAMLManager:
     """
     Return a YAMLManager with the specified adapter.
@@ -29,7 +30,10 @@ def get_manager(adapter: Union[str, YAMLAdapter, None] = None) -> YAMLManager:
 
     return YAMLManager(adapter=selected_adapter)
 
-def yaml_load(path: Optional[Path] = None, adapter: Optional[YAMLAdapter] = None) -> Dict[str, Any]:
+
+def yaml_load(
+    path: Optional[Path] = None, adapter: Optional[YAMLAdapter] = None
+) -> Dict[str, Any]:
     """
     Load a YAML file.
     """
@@ -38,7 +42,9 @@ def yaml_load(path: Optional[Path] = None, adapter: Optional[YAMLAdapter] = None
     return manager.load_file(path)
 
 
-def yaml_save(data: Dict[str, Any], path: Path, adapter: Optional[YAMLAdapter] = None) -> None:
+def yaml_save(
+    data: Dict[str, Any], path: Path, adapter: Optional[YAMLAdapter] = None
+) -> None:
     """
     Save a YAML file.
     """

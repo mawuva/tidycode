@@ -5,15 +5,14 @@ Test run_hooks.py
 from tidycode.core.bootstrap import setup_hooks, setup_hooks_minimal
 from tidycode.utils import HOOKS, yaml_dump, yaml_load
 
+
 def test_setup_hooks_remove_and_add(
     tmp_path,
     orig_config_with_hooks,
 ):
     config_path = tmp_path / ".pre-commit-config.yaml"
 
-    config_path.write_text(
-        yaml_dump(orig_config_with_hooks)
-    )
+    config_path.write_text(yaml_dump(orig_config_with_hooks))
 
     removed = ["linting"]
     added = ["format_isort"]
@@ -39,11 +38,12 @@ def test_setup_hooks_remove_and_add(
     )
 
     new_config = yaml_load(config_path.read_text())
-    
+
     all_repos = [r["repo"] for r in new_config["repos"]]
     assert HOOKS["linting"]["yaml"]["repo"] not in all_repos
     assert HOOKS["format_isort"]["yaml"]["repo"] in all_repos
     assert ["pre-commit", "autoupdate"] in commands
+
 
 def test_setup_hooks_minimal(tmp_path):
     config_path = tmp_path / ".pre-commit-config.yaml"
@@ -64,5 +64,3 @@ def test_setup_hooks_minimal(tmp_path):
     content = config_path.read_text()
     assert "repos" in yaml_load(content)
     assert commands == []
-
-

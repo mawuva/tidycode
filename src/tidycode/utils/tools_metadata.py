@@ -9,7 +9,7 @@ TOOLS_METADATA = {
                 "commitizen": {
                     "name": "cz_conventional_commits",
                     "version": "0.1.0",
-                    "tag_format": "v$version"
+                    "tag_format": "v$version",
                 }
             }
         }
@@ -20,7 +20,7 @@ TOOLS_METADATA = {
                 "ruff": {
                     "line-length": 88,
                     "select": ["E", "F", "W", "I"],
-                    "ignore": ["E501"]
+                    "ignore": ["E501"],
                 }
             }
         }
@@ -38,13 +38,6 @@ TOOLS_METADATA = {
         }
     },
     "format_isort": {
-        "pyproject_config": {
-            "tool": {
-                "isort": {
-                    "profile": "black",
-                    "line_length": 88
-                }
-            }
-        }
-    }
+        "pyproject_config": {"tool": {"isort": {"profile": "black", "line_length": 88}}}
+    },
 }

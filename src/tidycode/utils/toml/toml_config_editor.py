@@ -44,6 +44,7 @@ def inject_toml_config(
 
     return updated
 
+
 def inject_tool_config(
     base: Dict[str, Any],
     tool_name: str,
@@ -72,6 +73,7 @@ def inject_tool_config(
         print(format_config_diff(diff))
 
     return updated
+
 
 def merge_dict_minimal(base: Dict[str, Any], update: Dict[str, Any]) -> Dict[str, Any]:
     """Add only keys absent from update, without overwriting."""
@@ -111,7 +113,9 @@ def inject_tool_config_in_file(
         if update_if_exists:
             merged_section = merge_dict_minimal(tool_section, config)
             new_tool_data = {tool_name: merged_section}
-            updated = inject_toml_config(toml_data, {"tool": new_tool_data}, overwrite=True)
+            updated = inject_toml_config(
+                toml_data, {"tool": new_tool_data}, overwrite=True
+            )
         else:
             raise ValueError(
                 f"[tool.{tool_name}] already exists in {toml_file_path}. "
@@ -119,7 +123,9 @@ def inject_tool_config_in_file(
             )
     else:
         new_tool_data = {tool_name: config}
-        updated = inject_toml_config(toml_data, {"tool": new_tool_data}, overwrite=False)
+        updated = inject_toml_config(
+            toml_data, {"tool": new_tool_data}, overwrite=False
+        )
 
     diff = diff_configs(toml_data, updated)
 

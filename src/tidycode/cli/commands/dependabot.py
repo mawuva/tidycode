@@ -9,6 +9,7 @@ from tidycode.utils import DEPENDABOT_PATH
 
 app = typer.Typer(help="Setup dependabot.yml")
 
+
 @app.command("setup")
 def setup(path: Path = DEPENDABOT_PATH):
     """Create dependabot.yml config"""

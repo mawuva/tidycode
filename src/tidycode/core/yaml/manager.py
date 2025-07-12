@@ -26,14 +26,14 @@ class YAMLManager:
     def dump_str(self, data: Dict[str, Any]) -> str:
         return self.adapter.dump_str(data)
 
-    def load_file(self, path: Optional[Path] = None) -> Dict[str, Any]: 
+    def load_file(self, path: Optional[Path] = None) -> Dict[str, Any]:
         path = path or CONFIG_FILE_PATH
 
         if not path.exists():
             return {"repos": []}
 
         data = self.adapter.load_file(path)
-        
+
         if data is None:
             return {"repos": []}
         return data

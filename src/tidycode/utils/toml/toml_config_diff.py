@@ -4,6 +4,7 @@ Compare two TOML files and return a list of differences.
 
 from typing import Any, Dict, List, Tuple
 
+
 def diff_configs(
     old: Dict[str, Any], new: Dict[str, Any]
 ) -> List[Tuple[str, str, Any, Any]]:

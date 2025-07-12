@@ -1,12 +1,14 @@
 """
 Utils functions
 """
+
 import subprocess
 from pathlib import Path
 from typing import List, Tuple
 import questionary
 from yaml import safe_dump, safe_load
 from tomlkit import parse, dumps
+
 
 def run_command(command: list[str], check: bool = True) -> None:
     """Wrapper around subprocess.run with print."""
@@ -32,27 +34,32 @@ def write_file_if_missing(path: Path, content: str) -> bool:
         print(f"⚠️  File already exists: {path}")
         return False
 
-    
+
 def ask_checkbox(message: str, choices: List[Tuple[str, str]]) -> List[str]:
     """Ask a checkbox question."""
     q_choices = [questionary.Choice(title=name, value=value) for value, name in choices]
     return questionary.checkbox(message, choices=q_choices).ask() or []
 
+
 def ask_confirm(message: str) -> bool:
     """Ask a confirm question."""
     return questionary.confirm(message).ask()
+
 
 def yaml_dump(data: dict) -> str:
     """Dump a dictionary to a YAML string."""
     return safe_dump(data, sort_keys=False)
 
+
 def yaml_load(text: str) -> dict:
     """Load a YAML string to a dictionary."""
     return safe_load(text)
 
+
 def toml_dump(data: dict) -> str:
     """Dump a dictionary to a TOML string."""
     return dumps(data)
+
 
 def toml_load(text: str) -> dict:
     """Load a TOML string to a dictionary."""

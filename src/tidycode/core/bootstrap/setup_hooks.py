@@ -15,6 +15,7 @@ from tidycode.utils import (
     ask_confirm,
 )
 
+
 def setup_hooks(
     ask_checkbox_fn: Callable = None,
     run_command_fn: Callable = None,
@@ -65,8 +66,7 @@ def setup_hooks_minimal(
     yaml_save(config, config_path)
 
     print("✅ All hooks added to .pre-commit-config.yaml.")
-    
+
     if ask_confirm_fn("Run `pre-commit autoupdate` now?"):
         run_command_fn(["pre-commit", "autoupdate"])
         print("🔄 Hooks updated.")
-

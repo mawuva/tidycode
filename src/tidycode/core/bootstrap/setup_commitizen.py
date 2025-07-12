@@ -1,6 +1,7 @@
 """
 Setup Commitizen
 """
+
 from typing import Callable
 from pathlib import Path
 
@@ -11,15 +12,15 @@ from tidycode.utils import (
     inject_toml_config,
     get_tool_section,
     PYPROJECT_PATH,
-    TOOLS_METADATA
+    TOOLS_METADATA,
 )
 
 
 def setup_commitizen(
-        pyproject_path: Path = None,
-        dry_run: bool = False,
-        run_command_fn: Callable = None,
-    ) -> bool:
+    pyproject_path: Path = None,
+    dry_run: bool = False,
+    run_command_fn: Callable = None,
+) -> bool:
     """
     Injects Commitizen configuration into pyproject.toml and runs cz init.
     """
@@ -44,6 +45,7 @@ def setup_commitizen(
     if dry_run:
         print("🧪 Dry run enabled. Showing what would change: \n")
         from tidycode.utils import diff_configs, format_config_diff
+
         diffs = diff_configs(pyproject_data, updated)
         print(format_config_diff(diffs))
         return True
@@ -53,7 +55,9 @@ def setup_commitizen(
     print("✅ Commitizen config added to pyproject.toml")
 
     try:
-        run_command_fn(["cz", "init", "--", "--name", "cz_conventional_commits", "--yes"])
+        run_command_fn(
+            ["cz", "init", "--", "--name", "cz_conventional_commits", "--yes"]
+        )
     except Exception as e:
         print(f"⚠️ Commitizen CLI init failed: {e}")
 

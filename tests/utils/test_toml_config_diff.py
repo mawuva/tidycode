@@ -4,15 +4,10 @@ Test toml_config_diff.py
 
 from tidycode.utils import diff_configs, format_config_diff
 
+
 def test_diff_configs_added():
     old = {"tool": {}}
-    new = {
-        "tool": {
-            "black": {
-                "line-length": 88
-            }
-        }
-    }
+    new = {"tool": {"black": {"line-length": 88}}}
     diff = diff_configs(old, new)
     assert ("added", "black", None, {"line-length": 88}) in diff
 
@@ -36,6 +31,7 @@ def test_diff_configs_added_removed_changed():
     assert ("changed", "black", {"line-length": 88}, {"line-length": 120}) in diffs
     assert ("removed", "ruff", {"select": ["E", "F"]}, None) in diffs
     assert ("added", "isort", None, {"profile": "black"}) in diffs
+
 
 def test_format_config_diff_plaintext_output():
     diff = [

@@ -15,13 +15,14 @@ from tidycode.utils import (
 
 app = typer.Typer(help="Manage pyproject.toml and other configs")
 
+
 @app.command("diff-pyproject")
 def diff_pyproject(
     config_path: Path = None,
 ):
     """Show diff between current pyproject.toml and injected sample config"""
     config_path = config_path or PYPROJECT_PATH
-    
+
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
@@ -42,13 +43,14 @@ def diff_pyproject(
     output = format_config_diff(diff)
     typer.echo(output)
 
+
 @app.command("list-sections")
 def list_sections(
     config_path: Path = None,
 ):
     """List sections under [tool]"""
     config_path = config_path or PYPROJECT_PATH
-    
+
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
@@ -64,6 +66,7 @@ def list_sections(
     for key in sorted(tool.keys()):
         typer.echo(f" - {key}")
 
+
 @app.command("show-section")
 def show_section(
     section: str,
@@ -71,7 +74,7 @@ def show_section(
 ):
     """Show the content of a section under [tool]"""
     config_path = config_path or PYPROJECT_PATH
-    
+
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
@@ -88,6 +91,7 @@ def show_section(
     for key, value in data.items():
         typer.echo(f"{key} = {value!r}")
 
+
 @app.command("remove-section")
 def remove_section(
     section: str,
@@ -102,7 +106,7 @@ def remove_section(
 
     pyproject = load_toml_file(config_path)
     original_sections = list(pyproject.get("tool", {}).keys())
-    
+
     pyproject = remove_tool_section_and_return(pyproject, section)
     new_sections = list(pyproject.get("tool", {}).keys())
 

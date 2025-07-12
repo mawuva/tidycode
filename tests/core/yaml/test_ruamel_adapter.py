@@ -23,5 +23,3 @@ def test_ruamel_adapter_load_and_save_file():
         backend.save_file(data, path)
         loaded = backend.load_file(path)
         assert loaded == data
-
-

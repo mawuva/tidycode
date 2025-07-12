@@ -62,13 +62,11 @@ __all__ = [
     "HOOKS",
     "EXCLUDE_DIRS",
     "TARGETS",
-
     "get_installed_hook_keys",
     "add_hooks",
     "remove_hooks",
     "get_hooks_with_yaml",
     "get_iter_hook_with_yaml",
-
     "run_command",
     "write_file_if_missing",
     "ask_checkbox",
@@ -78,7 +76,6 @@ __all__ = [
     "print_msg",
     "toml_dump",
     "toml_load",
-
     "load_toml_file",
     "save_toml_file",
     "has_tool_section",
@@ -86,11 +83,9 @@ __all__ = [
     "set_tool_section",
     "remove_tool_section",
     "remove_tool_section_and_return",
-
     "inject_toml_config",
     "inject_tool_config",
     "inject_tool_config_in_file",
-
     "diff_configs",
     "format_config_diff",
 ]

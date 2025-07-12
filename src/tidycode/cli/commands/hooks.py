@@ -20,15 +20,18 @@ from tidycode.core.yaml import yaml_load, yaml_save
 
 app = typer.Typer(help="Setup hooks")
 
+
 @app.command("setup")
 def setup(config_path: Path = CONFIG_FILE_PATH):
     """Run interactive hook setup"""
     setup_hooks(config_path=config_path)
 
+
 @app.command("setup-minimal")
 def setup_minimal(config_path: Path = CONFIG_FILE_PATH):
     """Run minimal hook setup"""
     setup_hooks_minimal(config_path=config_path)
+
 
 @app.command()
 def install():
@@ -37,17 +40,20 @@ def install():
     run_command(["pre-commit", "install"])
     typer.echo("✅ Hooks installed.")
 
+
 @app.command()
 def uninstall():
     """Uninstall hooks from .git/hooks"""
     run_command(["pre-commit", "uninstall"])
     typer.echo("🗑️ Hooks removed.")
 
+
 @app.command()
 def update():
     """Update installed hooks"""
     run_command(["pre-commit", "autoupdate"])
     typer.echo("🔄 Hooks updated.")
+
 
 @app.command("list-installed")
 def list_installed(config_path: Path = CONFIG_FILE_PATH):
@@ -61,12 +67,14 @@ def list_installed(config_path: Path = CONFIG_FILE_PATH):
         for k in keys:
             typer.echo(f" - {k}: {HOOKS[k]['name']}")
 
+
 @app.command("list-available")
 def list_available():
     """List all available hooks from registry"""
     typer.echo("📦 Available hooks:")
     for key, meta in HOOKS.items():
         typer.echo(f" - {key}: {meta['name']}")
+
 
 @app.command()
 def clean(config_path: Path = CONFIG_FILE_PATH):
@@ -77,11 +85,13 @@ def clean(config_path: Path = CONFIG_FILE_PATH):
     yaml_save(config, config_path)
     typer.echo(f"🧹 Removed {len(keys)} hooks from {config_path.name}.")
 
+
 @app.command()
 def check():
     """Run all hooks against the full project"""
     typer.echo("🔍 Running all hooks (pre-commit run --all-files)...")
     run_command(["pre-commit", "run", "--all-files"])
+
 
 @app.command()
 def sync(

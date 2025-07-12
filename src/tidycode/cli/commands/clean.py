@@ -10,16 +10,18 @@ import os
 
 app = typer.Typer(help="Clean temporary and unwanted files")
 
+
 def remove_path(path: Path):
     try:
         if path.is_dir():
             shutil.rmtree(path)
-            #typer.echo(f"🗑️  Folder removed: {path}")
+            # typer.echo(f"🗑️  Folder removed: {path}")
         elif path.is_file():
             path.unlink()
-            #typer.echo(f"🗑️  File removed: {path}")
+            # typer.echo(f"🗑️  File removed: {path}")
     except Exception as e:
         typer.echo(f"⚠️ Impossible to remove {path}: {e}")
+
 
 @app.command("pycache")
 def clean_pycache(path: Path = Path(".")):

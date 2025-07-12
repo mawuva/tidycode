@@ -5,6 +5,7 @@ Helpers for hooks
 from typing import Iterator
 from .hooks_definitions import HOOKS
 
+
 def get_installed_hook_keys(config: dict) -> list[str]:
     """Get the installed hook keys from the config."""
     installed_keys = []
@@ -13,6 +14,7 @@ def get_installed_hook_keys(config: dict) -> list[str]:
             if "yaml" in hook and hook["yaml"]["repo"] == repo.get("repo"):
                 installed_keys.append(key)
     return installed_keys
+
 
 def add_hooks(config: dict, keys: list[str]) -> dict:
     """Add the hooks to the config."""
@@ -23,6 +25,7 @@ def add_hooks(config: dict, keys: list[str]) -> dict:
             config["repos"].append(repo)
     return config
 
+
 def remove_hooks(config: dict, keys: list[str]) -> dict:
     """Remove the hooks from the config."""
     repos_to_remove = [HOOKS[k]["yaml"]["repo"] for k in keys if "yaml" in HOOKS[k]]
@@ -31,9 +34,11 @@ def remove_hooks(config: dict, keys: list[str]) -> dict:
     ]
     return config
 
+
 def get_hooks_with_yaml() -> list[str]:
     """Get a list of the hooks with yaml."""
     return [k for k, v in HOOKS.items() if "yaml" in v]
+
 
 def get_iter_hook_with_yaml() -> Iterator[str]:
     """Get an iterator over the hooks with yaml."""

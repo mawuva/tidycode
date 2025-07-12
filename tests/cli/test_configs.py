@@ -8,6 +8,7 @@ from tidycode.utils import load_toml_file
 
 runner = CliRunner()
 
+
 def test_diff_pyproject_empty(tmp_path):
     """
     Test that the diff is shown and the file is not updated.
@@ -48,7 +49,9 @@ def test_show_section(tmp_path):
     path = tmp_path / "pyproject.toml"
     path.write_text("[tool.black]\nline-length = 88\n")
 
-    result = runner.invoke(configs_app, ["show-section", "black", "--config-path", str(path)])
+    result = runner.invoke(
+        configs_app, ["show-section", "black", "--config-path", str(path)]
+    )
     assert result.exit_code == 0
     assert "[tool.black]" in result.output
     assert "line-length" in result.output
@@ -58,7 +61,9 @@ def test_show_section_not_found(tmp_path):
     path = tmp_path / "pyproject.toml"
     path.write_text("[tool.dummy]\n")
 
-    result = runner.invoke(configs_app, ["show-section", "missing", "--config-path", str(path)])
+    result = runner.invoke(
+        configs_app, ["show-section", "missing", "--config-path", str(path)]
+    )
     assert result.exit_code == 1
     assert "not found" in result.output
 
@@ -77,7 +82,9 @@ line-length = 88
 select = ["E"]
 """
     )
-    result = runner.invoke(configs_app, ["remove-section", "black", "--config-path", str(path)])
+    result = runner.invoke(
+        configs_app, ["remove-section", "black", "--config-path", str(path)]
+    )
     assert result.exit_code == 0
     assert "Removed section" in result.output
 
@@ -93,8 +100,8 @@ def test_remove_section_not_found(tmp_path):
     path = tmp_path / "pyproject.toml"
     path.write_text("[tool.dummy]\n")
 
-    result = runner.invoke(configs_app, ["remove-section", "nonexistent", "--config-path", str(path)])
+    result = runner.invoke(
+        configs_app, ["remove-section", "nonexistent", "--config-path", str(path)]
+    )
     assert result.exit_code == 1
     assert "not found" in result.output
-
-

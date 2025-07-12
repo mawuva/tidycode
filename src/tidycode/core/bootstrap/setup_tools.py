@@ -3,6 +3,7 @@
 from pathlib import Path
 from tidycode.utils import inject_tool_config_in_file, TOOLS_METADATA
 
+
 def setup_tool_from_metadata(
     key: str,
     pyproject_path: Path,

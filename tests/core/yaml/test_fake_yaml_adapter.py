@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Dict
 import yaml
 
+
 class FakeYamlAdapter(YAMLAdapter):
     def __init__(self):
         self.last_loaded = None
@@ -39,6 +40,7 @@ class FakeYamlAdapter(YAMLAdapter):
         yaml_str = yaml.safe_dump(data)
         path.write_text(yaml_str, encoding="utf-8")
 
+
 def test_load_file_reads_content(tmp_path: Path):
     adapter = FakeYamlAdapter()
     manager = YAMLManager(adapter=adapter)
@@ -50,6 +52,7 @@ def test_load_file_reads_content(tmp_path: Path):
 
     assert config == {"repos": [{"repo": "fake-repo"}]}
     assert adapter.last_loaded == "repos:\n  - repo: fake-repo"
+
 
 def test_save_file_writes_content(tmp_path: Path):
     adapter = FakeYamlAdapter()
@@ -63,6 +66,7 @@ def test_save_file_writes_content(tmp_path: Path):
     assert adapter.last_dumped == config
     assert "another-repo" in file.read_text(encoding="utf-8")
 
+
 def test_load_file_returns_dict_on_empty_file(tmp_path: Path):
     empty_file = tmp_path / "empty.yaml"
     empty_file.write_text("")
@@ -72,4 +76,8 @@ def test_load_file_returns_dict_on_empty_file(tmp_path: Path):
 
     result = manager.load_file(empty_file)
     assert isinstance(result, dict)
-    assert "repos" not in result or result.get("repos") is None or result.get("repos") == []  # selon contenu vide
+    assert (
+        "repos" not in result
+        or result.get("repos") is None
+        or result.get("repos") == []
+    )  # selon contenu vide
