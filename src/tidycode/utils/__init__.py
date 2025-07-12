@@ -2,7 +2,7 @@
 Utils for Tidycode
 """
 
-from .constants import CONFIG_FILE, PYPROJECT, DEPENDABOT
+from .constants import CONFIG_FILE_PATH, PYPROJECT_PATH, DEPENDABOT_PATH
 from .hook_definitions import HOOKS
 from .tools_metadata import TOOLS_METADATA
 
@@ -41,9 +41,9 @@ from .pyproject_helpers import (
 )
 
 __all__ = [
-    "CONFIG_FILE",
-    "PYPROJECT",
-    "DEPENDABOT",
+    "CONFIG_FILE_PATH",
+    "PYPROJECT_PATH",
+    "DEPENDABOT_PATH",
     "TOOLS_METADATA",
     "HOOKS",
 

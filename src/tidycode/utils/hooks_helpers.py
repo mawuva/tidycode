@@ -6,11 +6,11 @@ from pathlib import Path
 from typing import Optional, Iterator
 import yaml
 from .hook_definitions import HOOKS
-from .constants import CONFIG_FILE
+from .constants import CONFIG_FILE_PATH
 
 def load_config(path: Optional[Path] = None) -> dict:
     """Load the config from the given path or the default path."""
-    config_path = path or CONFIG_FILE
+    config_path = path or CONFIG_FILE_PATH
     if config_path.exists():
         with config_path.open("r", encoding="utf-8") as f:
             return yaml.safe_load(f) or {"repos": []}
@@ -18,7 +18,7 @@ def load_config(path: Optional[Path] = None) -> dict:
 
 def save_config(config: dict, path: Optional[Path] = None) -> None:
     """Save the config to the given path or the default path."""
-    config_path = path or CONFIG_FILE
+    config_path = path or CONFIG_FILE_PATH  
     with config_path.open("w", encoding="utf-8") as f:
         yaml.safe_dump(config, f, sort_keys=False)
 

@@ -11,7 +11,7 @@ from tidycode.utils import (
     load_config,
     get_installed_hook_keys,
     HOOKS,
-    CONFIG_FILE,
+    CONFIG_FILE_PATH,
     remove_hooks,
     save_config,
     print_msg,
@@ -21,12 +21,12 @@ from tidycode.utils import (
 app = typer.Typer(help="Setup hooks")
 
 @app.command("setup")
-def setup(config_path: Path = Path(".pre-commit-config.yaml")):
+def setup(config_path: Path = CONFIG_FILE_PATH):
     """Run interactive hook setup"""
     setup_hooks(config_path=config_path)
 
 @app.command("setup-minimal")
-def setup_minimal(config_path: Path = Path(".pre-commit-config.yaml")):
+def setup_minimal(config_path: Path = CONFIG_FILE_PATH):
     """Run minimal hook setup"""
     setup_hooks_minimal(config_path=config_path)
 
@@ -50,7 +50,7 @@ def update():
     typer.echo("🔄 Hooks updated.")
 
 @app.command("list-installed")
-def list_installed(config_path: Path = CONFIG_FILE):
+def list_installed(config_path: Path = CONFIG_FILE_PATH):
     """List installed hooks from config"""
     config = load_config(config_path)
     keys = get_installed_hook_keys(config)
@@ -69,7 +69,7 @@ def list_available():
         typer.echo(f" - {key}: {meta['name']}")
 
 @app.command()
-def clean(config_path: Path = CONFIG_FILE):
+def clean(config_path: Path = CONFIG_FILE_PATH):
     """Remove all hooks from the config file"""
     config = load_config(config_path)
     keys = get_installed_hook_keys(config)
@@ -85,7 +85,7 @@ def check():
 
 @app.command()
 def sync(
-    config_path: Path = CONFIG_FILE,
+    config_path: Path = CONFIG_FILE_PATH,
     quiet: bool = False,
     debug: bool = False,
 ):
@@ -109,7 +109,7 @@ def sync(
 
 @app.command()
 def reset(
-    config_path: Path = CONFIG_FILE,
+    config_path: Path = CONFIG_FILE_PATH,
     quiet: bool = False,
     debug: bool = False,
 ):

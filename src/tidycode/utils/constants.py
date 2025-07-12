@@ -1,6 +1,6 @@
 
 from pathlib import Path
 
-CONFIG_FILE = Path(".pre-commit-config.yaml")
-PYPROJECT = Path("pyproject.toml")
-DEPENDABOT = Path(".github/dependabot.yml")
+CONFIG_FILE_PATH = Path(".pre-commit-config.yaml")
+PYPROJECT_PATH = Path("pyproject.toml")
+DEPENDABOT_PATH = Path(".github/dependabot.yml")

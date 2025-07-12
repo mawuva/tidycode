@@ -4,14 +4,14 @@ Helper functions for pyproject.toml
 
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
-from .constants import PYPROJECT
+from .constants import PYPROJECT_PATH
 from .helpers import toml_load, toml_dump
 from tomlkit import table
 from copy import deepcopy
 
 def load_pyproject(path: Path) -> Dict[str, Any]:
     """Load the pyproject.toml file and return it as a TOMLKit dict."""
-    pyproject_path = path or PYPROJECT
+    pyproject_path = path or PYPROJECT_PATH
     if not pyproject_path.exists():
         return {}
     with pyproject_path.open("r", encoding="utf-8") as f:
@@ -19,7 +19,7 @@ def load_pyproject(path: Path) -> Dict[str, Any]:
 
 def save_pyproject(data: Dict[str, Any], path: Path) -> None:
     """Save the pyproject.toml file."""
-    pyproject_path = path or PYPROJECT
+    pyproject_path = path or PYPROJECT_PATH
     with pyproject_path.open("w", encoding="utf-8") as f:
         f.write(toml_dump(data))
 

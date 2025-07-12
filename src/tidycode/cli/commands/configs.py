@@ -8,7 +8,7 @@ from tidycode.utils import (
     load_pyproject,
     diff_pyproject_config,
     format_pyproject_diff_plaintext,
-    PYPROJECT,
+    PYPROJECT_PATH,
     remove_tool_section_and_return,
     save_pyproject,
 )
@@ -20,7 +20,7 @@ def diff_pyproject(
     config_path: Path = None,
 ):
     """Show diff between current pyproject.toml and injected sample config"""
-    config_path = config_path or PYPROJECT
+    config_path = config_path or PYPROJECT_PATH
     
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
@@ -47,7 +47,7 @@ def list_sections(
     config_path: Path = None,
 ):
     """List sections under [tool]"""
-    config_path = config_path or PYPROJECT
+    config_path = config_path or PYPROJECT_PATH
     
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
@@ -70,7 +70,7 @@ def show_section(
     config_path: Path = None,
 ):
     """Show the content of a section under [tool]"""
-    config_path = config_path or PYPROJECT
+    config_path = config_path or PYPROJECT_PATH
     
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
@@ -94,7 +94,7 @@ def remove_section(
     config_path: Path = None,
 ):
     """Remove a section under [tool.<section>]"""
-    config_path = config_path or PYPROJECT
+    config_path = config_path or PYPROJECT_PATH
 
     if not config_path.exists():
         typer.echo(f"❌ {config_path} not found")
