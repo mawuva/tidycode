@@ -5,11 +5,19 @@ import subprocess
 from pathlib import Path
 from typing import List, Tuple
 import questionary
+from yaml import safe_dump, safe_load
+from tomlkit import parse, dumps, parse
 
 def run_command(command: list[str], check: bool = True) -> None:
     """Wrapper around subprocess.run with print."""
     print(f"📦 Running: {' '.join(command)}")
     subprocess.run(command, check=check)
+
+def print_msg(msg: str, quiet: bool = False, debug: bool = False) -> None:
+    if debug:
+        print("[DEBUG]", msg)
+    elif not quiet:
+        print(f"💬 {msg}")
 
 def write_file_if_missing(path: Path, content: str) -> bool:
     """Write a file if it doesn't exist."""
@@ -31,3 +39,18 @@ def ask_confirm(message: str) -> bool:
     """Ask a confirm question."""
     return questionary.confirm(message).ask()
 
+def yaml_dump(data: dict) -> str:
+    """Dump a dictionary to a YAML string."""
+    return safe_dump(data, sort_keys=False)
+
+def yaml_load(text: str) -> dict:
+    """Load a YAML string to a dictionary."""
+    return safe_load(text)
+
+def toml_dump(data: dict) -> str:
+    """Dump a dictionary to a TOML string."""
+    return dumps(data)
+
+def toml_load(text: str) -> dict:
+    """Load a TOML string to a dictionary."""
+    return parse(text)

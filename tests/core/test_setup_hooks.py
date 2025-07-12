@@ -4,13 +4,7 @@ Test run_hooks.py
 
 import yaml
 from tidycode.core.bootstrap import setup_hooks, setup_hooks_minimal
-from tidycode.utils import HOOKS
-
-def yaml_dump(data: dict) -> str:
-    return yaml.safe_dump(data, sort_keys=False)
-
-def yaml_load(text: str) -> dict:
-    return yaml.safe_load(text)
+from tidycode.utils import HOOKS, yaml_dump, yaml_load
 
 def test_setup_hooks_remove_and_add(
     tmp_path,

@@ -5,7 +5,6 @@ Hook definitions
 HOOKS = {
     "commitizen": {
         "name": "Commitizen (conventional commits)",
-        "config": '[tool.commitizen]\nname = "cz_conventional_commits"\nversion = "0.1.0"\ntag_format = "v$version"\n'
     },
     "linting": {
         "name": "Ruff Linter",

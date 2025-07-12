@@ -3,7 +3,7 @@ Helpers for hooks
 """
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Iterator
 import yaml
 from .hook_definitions import HOOKS
 from .constants import CONFIG_FILE
@@ -47,3 +47,11 @@ def remove_hooks(config: dict, keys: list[str]) -> dict:
         r for r in config.get("repos", []) if r.get("repo") not in repos_to_remove
     ]
     return config
+
+def get_hooks_with_yaml() -> list[str]:
+    """Get a list of the hooks with yaml."""
+    return [k for k, v in HOOKS.items() if "yaml" in v]
+
+def get_iter_hook_with_yaml() -> Iterator[str]:
+    """Get an iterator over the hooks with yaml."""
+    return next(k for k, v in HOOKS.items() if "yaml" in v)
