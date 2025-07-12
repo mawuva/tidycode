@@ -1,6 +1,6 @@
 import pytest
 from tidycode.core.bootstrap import setup_commitizen
-from tidycode.utils import load_pyproject
+from tidycode.utils import load_toml_file
 
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def test_setup_commitizen_injects_config(tmp_path, fake_run_command):
     success = setup_commitizen(path, run_command_fn=run_command_fn)
     assert success is True
 
-    config = load_pyproject(path)
+    config = load_toml_file(path)
     assert config["tool"]["commitizen"]["name"] == "cz_conventional_commits"
     assert ["cz", "init", "--name", "cz_conventional_commits", "--yes"] in calls
 
@@ -75,6 +75,6 @@ def test_setup_commitizen_adds_tool_if_missing(tmp_path, fake_run_command):
     success = setup_commitizen(path, dry_run=False, run_command_fn=run_command_fn)
     assert success is True
 
-    config = load_pyproject(path)
+    config = load_toml_file(path)
     assert "tool" in config
     assert "commitizen" in config["tool"]

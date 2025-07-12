@@ -5,12 +5,12 @@ Manage project configuration files like pyproject.toml
 import typer
 from pathlib import Path
 from tidycode.utils import (
-    load_pyproject,
-    diff_pyproject_config,
-    format_pyproject_diff_plaintext,
+    load_toml_file,
+    diff_configs,
+    format_config_diff,
     PYPROJECT_PATH,
     remove_tool_section_and_return,
-    save_pyproject,
+    save_toml_file,
 )
 
 app = typer.Typer(help="Manage pyproject.toml and other configs")
@@ -26,7 +26,7 @@ def diff_pyproject(
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
 
-    base = load_pyproject(config_path)
+    base = load_toml_file(config_path)
     sample = {
         "tool": {
             "black": {"line-length": 88},
@@ -34,12 +34,12 @@ def diff_pyproject(
         }
     }
 
-    diff = diff_pyproject_config(base, sample)
+    diff = diff_configs(base, sample)
     if not diff:
         typer.echo("✅ No differences found.")
         raise typer.Exit()
 
-    output = format_pyproject_diff_plaintext(diff)
+    output = format_config_diff(diff)
     typer.echo(output)
 
 @app.command("list-sections")
@@ -53,7 +53,7 @@ def list_sections(
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
 
-    config = load_pyproject(config_path)
+    config = load_toml_file(config_path)
     tool = config.get("tool", {})
 
     if not tool:
@@ -76,7 +76,7 @@ def show_section(
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
 
-    config = load_pyproject(config_path)
+    config = load_toml_file(config_path)
     tool = config.get("tool", {})
     data = tool.get(section)
 
@@ -100,7 +100,7 @@ def remove_section(
         typer.echo(f"❌ {config_path} not found")
         raise typer.Exit(1)
 
-    pyproject = load_pyproject(config_path)
+    pyproject = load_toml_file(config_path)
     original_sections = list(pyproject.get("tool", {}).keys())
     
     pyproject = remove_tool_section_and_return(pyproject, section)
@@ -110,5 +110,5 @@ def remove_section(
         typer.echo(f"⚠️ Section [tool.{section}] not found in pyproject.toml")
         raise typer.Exit(code=1)
 
-    save_pyproject(pyproject, config_path)
+    save_toml_file(pyproject, config_path)
     typer.echo(f"🗑️ Removed section: [tool.{section}]")

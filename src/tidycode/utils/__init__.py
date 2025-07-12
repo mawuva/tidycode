@@ -34,18 +34,27 @@ from .helpers import (
     toml_load,
 )
 
-from .pyproject_helpers import (
-    load_pyproject,
-    save_pyproject,
+from .toml_helpers import (
+    load_toml_file,
+    save_toml_file,
     has_tool_section,
     get_tool_section,
     set_tool_section,
     remove_tool_section,
     remove_tool_section_and_return,
-    inject_pyproject_config,
-    diff_pyproject_config,
-    format_pyproject_diff_plaintext,
 )
+
+from .toml_config_editor import (
+    inject_toml_config,
+    inject_tool_config,
+    inject_tool_config_in_file,
+)
+
+from .toml_config_diff import (
+    diff_configs,
+    format_config_diff,
+)
+
 
 __all__ = [
     "CONFIG_FILE_PATH",
@@ -74,14 +83,18 @@ __all__ = [
     "toml_dump",
     "toml_load",
 
-    "load_pyproject",
-    "save_pyproject",
+    "load_toml_file",
+    "save_toml_file",
     "has_tool_section",
     "get_tool_section",
     "set_tool_section",
     "remove_tool_section",
     "remove_tool_section_and_return",
-    "inject_pyproject_config",
-    "diff_pyproject_config",
-    "format_pyproject_diff_plaintext",
+
+    "inject_toml_config",
+    "inject_tool_config",
+    "inject_tool_config_in_file",
+    
+    "diff_configs",
+    "format_config_diff",
 ]

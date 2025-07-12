@@ -22,7 +22,7 @@ def orig_config_with_hooks(orig_config):
     return orig_config
 
 @pytest.fixture
-def empty_tmp_pyproject(tmp_path):
+def empty_tmp_toml_file(tmp_path):
     path = tmp_path / "pyproject.toml"
     path.write_text("")
     return path

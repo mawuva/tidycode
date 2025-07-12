@@ -4,7 +4,7 @@ Test configs.py
 
 from typer.testing import CliRunner
 from tidycode.cli.commands.configs import app as configs_app
-from tidycode.utils import load_pyproject
+from tidycode.utils import load_toml_file
 
 runner = CliRunner()
 
@@ -81,7 +81,7 @@ select = ["E"]
     assert result.exit_code == 0
     assert "Removed section" in result.output
 
-    data = load_pyproject(path)
+    data = load_toml_file(path)
     assert "black" not in data["tool"]
     assert "ruff" in data["tool"]
 

@@ -2,7 +2,6 @@
 Test run_hooks.py
 """
 
-import yaml
 from tidycode.core.bootstrap import setup_hooks, setup_hooks_minimal
 from tidycode.utils import HOOKS, yaml_dump, yaml_load
 
