@@ -13,7 +13,6 @@ HOOKS = {
                 {"id": "end-of-file-fixer"},
                 {"id": "check-yaml"},
                 {"id": "check-added-large-files"},
-                {"id": "name-tests-test"},
             ]
         }
     },
@@ -41,7 +40,7 @@ HOOKS = {
                     "name": "Commitizen message check",
                     "entry": "cz check -- --commit-msg-file",
                     "language": "system",
-                    "stages": "[commit-msg]",
+                    "stages": ["commit-msg"],
                     "args": ["{commit_msg_file}"],
                 }
             ],

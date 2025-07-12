@@ -20,10 +20,10 @@ def get_manager(adapter: Union[str, YAMLAdapter, None] = None) -> YAMLManager:
     """
     if isinstance(adapter, YAMLAdapter):
         selected_adapter = adapter
-    elif adapter == "ruamel":
-        selected_adapter = RuamelYAMLAdapter()
-    elif adapter in (None, "pyyaml"):
+    elif adapter == "pyyaml":
         selected_adapter = PyYAMLAdapter()
+    elif adapter in (None, "ruamel"):
+        selected_adapter = RuamelYAMLAdapter()
     else:
         raise ValueError(f"Unsupported YAML adapter: {adapter}")
 
@@ -45,4 +45,3 @@ def yaml_save(data: Dict[str, Any], path: Path, adapter: Optional[YAMLAdapter] =
     path = path or CONFIG_FILE_PATH
     manager = get_manager(adapter) if adapter else get_manager()
     manager.save_file(data, path)
-

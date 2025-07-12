@@ -4,7 +4,7 @@ Adapter for ruamel.yaml.
 
 from pathlib import Path
 from typing import Any
-from ruamel.yaml import YAML
+from ruamel.yaml import YAML, CommentedSeq
 from io import StringIO
 
 from .base import YAMLAdapter
@@ -14,6 +14,7 @@ class RuamelYAMLAdapter(YAMLAdapter):
 
     def __init__(self):
         self.yaml = YAML()
+        self.yaml.indent(mapping=2, sequence=4, offset=2)
         self.yaml.preserve_quotes = True
         self.yaml.default_flow_style = False
 
@@ -30,5 +31,21 @@ class RuamelYAMLAdapter(YAMLAdapter):
             return self.yaml.load(f)
 
     def save_file(self, data: Any, path: Path) -> None:
+        self._format_hooks_spacing(data)
         with path.open("w", encoding="utf-8") as f:
             self.yaml.dump(data, f)
+
+    def _format_hooks_spacing(self, data: Any) -> None:
+        """
+        Add a blank line between each repo in 'repos'.
+        """
+        if not isinstance(data, dict):
+            return
+
+        repos = data.get("repos")
+        if not isinstance(repos, list):
+            return
+
+        if isinstance(repos, CommentedSeq):
+            for i in range(len(repos) - 1):
+                repos.yaml_set_comment_before_after_key(i + 1, before='\n')

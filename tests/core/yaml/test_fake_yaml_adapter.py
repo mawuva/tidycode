@@ -9,8 +9,8 @@ import yaml
 
 class FakeYamlAdapter(YAMLAdapter):
     def __init__(self):
-        self.last_loaded = None  # Contenu YAML brut chargé
-        self.last_dumped = None  # Dict Python dumpé
+        self.last_loaded = None
+        self.last_dumped = None
 
     def load(self, stream) -> Dict:
         content = stream.read()
