@@ -2,6 +2,8 @@
 Metadata for dev tools (used in hooks, pyproject.toml injection, etc.)
 """
 
+from tomlkit import string
+
 TOOLS_METADATA = {
     "commitizen": {
         "pyproject_config": {
@@ -14,18 +16,29 @@ TOOLS_METADATA = {
             }
         }
     },
-    "linting": {
+    "ruff": {
         "pyproject_config": {
             "tool": {
                 "ruff": {
                     "line-length": 88,
+                    "target-version": ["py38"],
                     "select": ["E", "F", "W", "I"],
                     "ignore": ["E501"],
+                    "quote-style": "double",
+                    "exclude": [
+                        "migrations",
+                        ".venv",
+                        "venv",
+                        "env",
+                        ".env",
+                        "dist",
+                        "build",
+                    ],
                 }
             }
         }
     },
-    "format_black": {
+    "black": {
         "pyproject_config": {
             "tool": {
                 "black": {
@@ -33,11 +46,29 @@ TOOLS_METADATA = {
                     "target-version": ["py38"],
                     "skip-string-normalization": False,
                     "preview": True,
+                    "exclude": string(
+                        r"""
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+)/
+""",
+                        multiline=True,
+                    ),
                 }
             }
         }
     },
-    "format_isort": {
-        "pyproject_config": {"tool": {"isort": {"profile": "black", "line_length": 88}}}
+    "isort": {
+        "pyproject_config": {
+            "tool": {
+                "isort": {
+                    "profile": "black",
+                    "line_length": 88,
+                }
+            }
+        }
     },
 }

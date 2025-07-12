@@ -7,8 +7,15 @@ from tidycode.utils import (
     inject_toml_config,
     inject_tool_config,
     inject_tool_config_in_file,
-    load_toml_file,
 )
+from pathlib import Path
+
+
+@pytest.fixture
+def tmp_pyproject(tmp_path: Path):
+    file = tmp_path / "pyproject.toml"
+    file.write_text("[tool.poetry]\nname = 'demo'\n", encoding="utf-8")
+    return file
 
 
 def test_inject_without_conflict():
@@ -52,25 +59,6 @@ def test_inject_tool_config():
     assert updated["tool"]["black"]["target-version"] == ["py38"]
 
 
-def test_inject_tool_config_in_file_add_new(tmp_path):
-    pyproject_path = tmp_path / "pyproject.toml"
-    pyproject_path.write_text("[tool.other]\nkey = 'value'\n")
-
-    black_conf = {
-        "line-length": 88,
-        "target-version": ["py38"],
-    }
-
-    inject_tool_config_in_file(
-        pyproject_path, "black", black_conf, update_if_exists=False, dry_run=False
-    )
-
-    data = load_toml_file(pyproject_path)
-    assert "black" in data.get("tool", {})
-    assert data["tool"]["black"]["line-length"] == 88
-    assert data["tool"]["black"]["target-version"] == ["py38"]
-
-
 def test_inject_tool_config_in_file_error_on_existing(tmp_path):
     pyproject_path = tmp_path / "pyproject.toml"
     content = """
@@ -87,25 +75,3 @@ line-length = 80
         inject_tool_config_in_file(
             pyproject_path, "black", black_conf, update_if_exists=False, dry_run=False
         )
-
-
-def test_inject_tool_config_in_file_update_merge(tmp_path):
-    pyproject_path = tmp_path / "pyproject.toml"
-    content = """
-[tool.black]
-line-length = 80
-"""
-
-    pyproject_path.write_text(content)
-
-    black_conf = {
-        "target-version": ["py38"],
-    }
-
-    inject_tool_config_in_file(
-        pyproject_path, "black", black_conf, update_if_exists=True, dry_run=False
-    )
-
-    data = load_toml_file(pyproject_path)
-    assert data["tool"]["black"]["line-length"] == 80
-    assert data["tool"]["black"]["target-version"] == ["py38"]

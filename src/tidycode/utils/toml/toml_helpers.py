@@ -5,8 +5,18 @@ Helper functions for toml files
 from pathlib import Path
 from typing import Any, Dict
 from ..constants import PYPROJECT_PATH
-from ..helpers import toml_load, toml_dump
-from tomlkit import table
+from tomlkit import table, dumps, parse
+import re
+
+
+def toml_dump(data: dict) -> str:
+    """Dump a dictionary to a TOML string."""
+    return dumps(data)
+
+
+def toml_load(text: str) -> dict:
+    """Load a TOML string to a dictionary."""
+    return parse(text)
 
 
 def load_toml_file(path: Path = None) -> Dict[str, Any]:
@@ -21,8 +31,12 @@ def load_toml_file(path: Path = None) -> Dict[str, Any]:
 def save_toml_file(data: Dict[str, Any], path: Path = None) -> None:
     """Save the toml file."""
     toml_file_path = path or PYPROJECT_PATH
+    raw = toml_dump(data)
+
+    formatted = re.sub(r"\n(?=\[)", "\n\n", raw)
+
     with toml_file_path.open("w", encoding="utf-8") as f:
-        f.write(toml_dump(data) + "\n")
+        f.write(formatted.strip() + "\n")
 
 
 def has_tool_section(data: Dict[str, Any], tool: str) -> bool:

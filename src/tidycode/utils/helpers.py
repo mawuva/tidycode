@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import List, Tuple
 import questionary
 from yaml import safe_dump, safe_load
-from tomlkit import parse, dumps
 
 
 def run_command(command: list[str], check: bool = True) -> None:
@@ -54,13 +53,3 @@ def yaml_dump(data: dict) -> str:
 def yaml_load(text: str) -> dict:
     """Load a YAML string to a dictionary."""
     return safe_load(text)
-
-
-def toml_dump(data: dict) -> str:
-    """Dump a dictionary to a TOML string."""
-    return dumps(data)
-
-
-def toml_load(text: str) -> dict:
-    """Load a TOML string to a dictionary."""
-    return parse(text)

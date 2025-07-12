@@ -19,7 +19,7 @@ def setup_black(
 ):
     """Inject black config into pyproject.toml"""
     success = setup_tool_from_metadata(
-        key="format_black",
+        key="black",
         pyproject_path=pyproject,
         update_if_exists=update_if_exists,
         dry_run=dry_run,

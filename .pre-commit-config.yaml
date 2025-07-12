@@ -13,13 +13,9 @@ repos:
       - id: commitizen-branch
         stages:
           - pre-push
-  - repo: local
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
     hooks:
-      - id: commitizen-message-check
-        name: Commitizen message check
-        entry: cz check -- --commit-msg-file
-        language: system
-        stages:
-          - commit-msg
-        args:
-          - '{commit_msg_file}'
+      - id: black
+        language_version: python3

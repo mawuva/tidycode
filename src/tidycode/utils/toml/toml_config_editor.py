@@ -88,44 +88,37 @@ def merge_dict_minimal(base: Dict[str, Any], update: Dict[str, Any]) -> Dict[str
 def inject_tool_config_in_file(
     toml_file_path: Path,
     tool_name: str,
-    config: Dict[str, Any],
+    config: Dict[str, Any],  # doit contenir {"tool": {tool_name: {...}}}
     update_if_exists: bool = False,
     dry_run: bool = False,
 ) -> None:
     """
-    High-level function to manipulate the toml file directly.
-    Inject the config for a tool in the [tool.<tool_name>] section of toml file.
-    If config is a dict, it will be injected into the tool key of the toml file.
+    Injecte une config complète [tool.<tool_name>] dans pyproject.toml.
 
-    Parameters:
-    - toml_file_path: Path to the toml file.
-    - tool_name: Name of the tool to inject the config for.
-    - config: Config to inject.
-    - update_if_exists: If True, the config will be merged with the existing config.
-    - dry_run: If True, the diff will be printed without modifying the config.
+    Ex:
+        inject_tool_config_in_file(pyproject, "black", black_config["pyproject_config"])
     """
-
     toml_file_path = toml_file_path or PYPROJECT_PATH
     toml_data = load_toml_file(toml_file_path)
-    tool_section = toml_data.get("tool", {}).get(tool_name)
+    tool_config = config.get("tool", {}).get(tool_name)
 
-    if tool_section is not None:
+    if tool_config is None:
+        raise ValueError("Invalid config format: missing 'tool.<tool_name>' section")
+
+    existing_section = toml_data.get("tool", {}).get(tool_name)
+
+    if existing_section is not None:
         if update_if_exists:
-            merged_section = merge_dict_minimal(tool_section, config)
-            new_tool_data = {tool_name: merged_section}
-            updated = inject_toml_config(
-                toml_data, {"tool": new_tool_data}, overwrite=True
-            )
+            merged = merge_dict_minimal(existing_section, tool_config)
+            config = {"tool": {tool_name: merged}}
+            updated = inject_toml_config(toml_data, config, overwrite=True)
         else:
             raise ValueError(
                 f"[tool.{tool_name}] already exists in {toml_file_path}. "
                 f"Pass update_if_exists=True to merge."
             )
     else:
-        new_tool_data = {tool_name: config}
-        updated = inject_toml_config(
-            toml_data, {"tool": new_tool_data}, overwrite=False
-        )
+        updated = inject_toml_config(toml_data, config, overwrite=False)
 
     diff = diff_configs(toml_data, updated)
 

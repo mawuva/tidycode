@@ -30,19 +30,32 @@ HOOKS = {
             ],
         },
     },
-    "commitizen-message": {
-        "name": "Commitizen Message",
+    # "commitizen-message": {
+    #     "name": "Commitizen Message",
+    #     "yaml": {
+    #         "repo": "local",
+    #         "hooks": [
+    #             {
+    #                 "id": "commitizen-message-check",
+    #                 "name": "Commitizen message check",
+    #                 "entry": "cz check -- --commit-msg-file",
+    #                 "language": "system",
+    #                 "stages": ["[commit-msg]"],
+    #                 "args": ["{commit_msg_file}"],
+    #             }
+    #         ],
+    #     },
+    # },
+    "format_black": {
+        "name": "Black Formatter",
         "yaml": {
-            "repo": "local",
+            "repo": "https://github.com/psf/black",
+            "rev": "25.1.0",
             "hooks": [
                 {
-                    "id": "commitizen-message-check",
-                    "name": "Commitizen message check",
-                    "entry": "cz check -- --commit-msg-file",
-                    "language": "system",
-                    "stages": ["commit-msg"],
-                    "args": ["{commit_msg_file}"],
-                }
+                    "id": "black",
+                    "language_version": "python3",
+                },
             ],
         },
     },
@@ -50,16 +63,14 @@ HOOKS = {
         "name": "Ruff Linter",
         "yaml": {
             "repo": "https://github.com/charliermarsh/ruff-pre-commit",
-            "rev": "v0.3.7",
-            "hooks": [{"id": "ruff"}],
-        },
-    },
-    "format_black": {
-        "name": "Black Formatter",
-        "yaml": {
-            "repo": "https://github.com/psf/black",
-            "rev": "24.3.0",
-            "hooks": [{"id": "black"}],
+            "rev": "v0.12.1",
+            "hooks": [
+                {
+                    "id": "ruff",
+                    "language_version": "python3",
+                    "args": ["[--fix]"],
+                },
+            ],
         },
     },
     "format_isort": {
