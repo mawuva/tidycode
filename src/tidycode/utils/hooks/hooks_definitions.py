@@ -63,12 +63,13 @@ HOOKS = {
         "name": "Ruff Linter",
         "yaml": {
             "repo": "https://github.com/charliermarsh/ruff-pre-commit",
-            "rev": "v0.12.1",
+            "rev": "v0.12.3",
             "hooks": [
                 {
                     "id": "ruff",
                     "language_version": "python3",
-                    "args": ["[--fix]"],
+                    "args": ["--fix"],
+                    "files": r"\.py$",
                 },
             ],
         },
