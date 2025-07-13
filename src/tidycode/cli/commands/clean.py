@@ -62,7 +62,7 @@ def clean_all(path: Path = Path(".")):
     typer.echo("🧹 Deep cleaning in progress...")
 
     clean_pycache()
-    clean_poetry_lock()
+    #clean_poetry_lock()
 
     extras = [
         ".venv",

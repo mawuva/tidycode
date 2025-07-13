@@ -47,11 +47,19 @@ TOOLS_METADATA = {
                     "target-version": ["py38"],
                     "skip-string-normalization": False,
                     "preview": True,
+                    "include": r"\.pyi?$",
                     "exclude": string(
                         r"""
 /(
-    \.git
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.tox
   | \.venv
+  | _build
+  | buck-out
   | build
   | dist
 )/
@@ -77,17 +85,18 @@ TOOLS_METADATA = {
             "tool": {
                 "mypy": {
                     "python_version": "3.8",
-                    "strict": True,
-                    "ignore_missing_imports": True,
-                    "disallow_untyped_defs": False,
-                    "check_untyped_defs": True,
-                    "no_implicit_optional": True,
+                    "warn_unused_configs": True,
                     "warn_unused_ignores": True,
                     "warn_return_any": True,
-                    "warn_redundant_casts": True,
-                    "warn_unused_configs": True,
-                    "show_error_codes": True,
-                    "pretty": True,
+                    "disallow_untyped_defs": True,
+                    "disallow_incomplete_defs": True,
+                    "check_untyped_defs": True,
+                    "strict_optional": True,
+                    "ignore_missing_imports": True,
+                    "plugins": [],
+                },
+                "mypy-tests.*": {
+                    "ignore_errors": True
                 }
             }
         }

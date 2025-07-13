@@ -32,24 +32,12 @@ mypy = "^1.16.1"
 tidycode = "tidycode.cli.main:main"
 tidy = "tidycode.cli.main:main"
 
+
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.0"
 tag_format = "v$version"
-
-
-python_version = "3.8"
-strict = true
-ignore_missing_imports = true
-disallow_untyped_defs = false
-check_untyped_defs = true
-no_implicit_optional = true
-warn_unused_ignores = true
-warn_return_any = true
-warn_redundant_casts = true
-warn_unused_configs = true
-show_error_codes = true
-pretty = true
 
 [tool.black]
 line-length = 88
@@ -64,6 +52,15 @@ exclude = """
   | dist
 )/
 """
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+exclude = ["migrations", ".venv", "venv", "env", ".env", "dist", "build"]
+
+[tool."ruff.lint"]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
 
 [tool.isort]
 profile = "black"
@@ -82,15 +79,6 @@ warn_redundant_casts = true
 warn_unused_configs = true
 show_error_codes = true
 pretty = true
-
-[tool.ruff]
-line-length = 88
-target-version = "py38"
-exclude = ["migrations", ".venv", "venv", "env", ".env", "dist", "build"]
-
-[tool."ruff.lint"]
-select = ["E", "F", "W", "I"]
-ignore = ["E501"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

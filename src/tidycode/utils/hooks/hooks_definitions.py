@@ -62,13 +62,13 @@ HOOKS = {
     "linting": {
         "name": "Ruff Linter",
         "yaml": {
-            "repo": "https://github.com/charliermarsh/ruff-pre-commit",
-            "rev": "v0.12.3",
+            "repo": "https://github.com/astral-sh/ruff-pre-commit",
+            "rev": "v0.12.1",
             "hooks": [
                 {
                     "id": "ruff",
-                    "language_version": "python3",
                     "args": ["--fix"],
+                    "language_version": "python3",
                     "files": r"\.py$",
                 },
             ],
@@ -78,7 +78,7 @@ HOOKS = {
         "name": "isort Import Sorter",
         "yaml": {
             "repo": "https://github.com/pre-commit/mirrors-isort",
-            "rev": "v6.0.1",
+            "rev": "v5.13.2",
             "hooks": [{"id": "isort"}],
         },
     },
