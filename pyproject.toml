@@ -15,14 +15,8 @@ dependencies = [
     "ruamel-yaml (>=0.18.14,<0.19.0)"
 ]
 
-
-
-
 [tool.poetry]
 packages = [{include = "tidycode", from = "src"}]
-
-
-
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.2.0"
@@ -30,23 +24,32 @@ pytest = "^8.4.1"
 pytest-mock = "^3.14.1"
 commitizen = "^4.8.3"
 black = "^25.1.0"
-
-
-
+ruff = "^0.12.3"
+isort = "^6.0.1"
+mypy = "^1.16.1"
 
 [tool.poetry.scripts]
 tidycode = "tidycode.cli.main:main"
 tidy = "tidycode.cli.main:main"
-
-
-
-
 
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.0"
 tag_format = "v$version"
 
+
+python_version = "3.8"
+strict = true
+ignore_missing_imports = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+show_error_codes = true
+pretty = true
 
 [tool.black]
 line-length = 88
@@ -61,6 +64,33 @@ exclude = """
   | dist
 )/
 """
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+strict = true
+ignore_missing_imports = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+show_error_codes = true
+pretty = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+exclude = ["migrations", ".venv", "venv", "env", ".env", "dist", "build"]
+
+[tool."ruff.lint"]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

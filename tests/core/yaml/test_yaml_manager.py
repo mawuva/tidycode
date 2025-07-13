@@ -2,8 +2,9 @@
 Test the YAML manager.
 """
 
-from tidycode.core.yaml import YAMLManager, PyYAMLAdapter, RuamelYAMLAdapter
 from pathlib import Path
+
+from tidycode.core.yaml import PyYAMLAdapter, RuamelYAMLAdapter, YAMLManager
 
 
 def test_manager_with_pyyaml():

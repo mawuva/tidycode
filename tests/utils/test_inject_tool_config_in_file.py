@@ -1,6 +1,6 @@
 import pytest
-from pathlib import Path
-from tidycode.utils import inject_tool_config_in_file, load_toml_file, TOOLS_METADATA
+
+from tidycode.utils import TOOLS_METADATA, inject_tool_config_in_file, load_toml_file
 
 
 @pytest.fixture

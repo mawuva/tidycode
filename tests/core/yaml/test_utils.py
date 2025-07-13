@@ -3,10 +3,11 @@ Test utils for YAML.
 """
 
 import pytest
-from tidycode.core.yaml.utils import get_manager
-from tidycode.core.yaml.manager import YAMLManager
+
 from tidycode.core.yaml.adapters.pyyaml_adapter import PyYAMLAdapter
 from tidycode.core.yaml.adapters.ruamel_adapter import RuamelYAMLAdapter
+from tidycode.core.yaml.manager import YAMLManager
+from tidycode.core.yaml.utils import get_manager
 
 
 def test_get_manager_default_returns_ruamel_adapter():

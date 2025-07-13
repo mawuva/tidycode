@@ -3,6 +3,7 @@ Test dependabot commands
 """
 
 from typer.testing import CliRunner
+
 from tidycode.cli.main import app
 
 runner = CliRunner()

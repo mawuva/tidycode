@@ -4,15 +4,16 @@ Run hooks
 
 from pathlib import Path
 from typing import Callable, Optional
+
 from tidycode.core.yaml import yaml_load, yaml_save
 from tidycode.utils import (
     HOOKS,
-    get_installed_hook_keys,
     add_hooks,
-    remove_hooks,
     ask_checkbox,
-    run_command,
     ask_confirm,
+    get_installed_hook_keys,
+    remove_hooks,
+    run_command,
 )
 
 

@@ -2,13 +2,13 @@
 Manager for YAML files.
 """
 
-from typing import Optional, Dict, Any
 from pathlib import Path
+from typing import Any, Dict, Optional
 
 from tidycode.utils import CONFIG_FILE_PATH
 
-from .adapters.ruamel_adapter import RuamelYAMLAdapter
 from .adapters.base import YAMLAdapter
+from .adapters.ruamel_adapter import RuamelYAMLAdapter
 
 
 class YAMLManager:

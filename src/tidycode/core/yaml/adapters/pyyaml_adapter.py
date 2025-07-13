@@ -4,6 +4,7 @@ Adapter for PyYAML.
 
 from pathlib import Path
 from typing import Any
+
 import yaml
 
 from .base import YAMLAdapter

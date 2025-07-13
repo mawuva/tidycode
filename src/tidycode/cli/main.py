@@ -4,15 +4,7 @@ Main CLI
 
 import typer
 
-from .commands import (
-    hooks,
-    commitizen,
-    dependabot,
-    configs,
-    clean,
-    quality,
-)
-
+from .commands import clean, commitizen, configs, dependabot, hooks, quality
 
 app = typer.Typer(help="Tidycode is a tool to help you keep your code clean and tidy.")
 

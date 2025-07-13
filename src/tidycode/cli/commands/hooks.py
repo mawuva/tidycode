@@ -3,20 +3,20 @@ Hooks commands
 """
 
 from pathlib import Path
+
 import typer
 
 from tidycode.core.bootstrap import setup_hooks, setup_hooks_minimal
-from tidycode.utils import (
-    run_command,
-    get_installed_hook_keys,
-    HOOKS,
-    CONFIG_FILE_PATH,
-    remove_hooks,
-    print_msg,
-    add_hooks,
-)
 from tidycode.core.yaml import yaml_load, yaml_save
-
+from tidycode.utils import (
+    CONFIG_FILE_PATH,
+    HOOKS,
+    add_hooks,
+    get_installed_hook_keys,
+    print_msg,
+    remove_hooks,
+    run_command,
+)
 
 app = typer.Typer(help="Setup hooks")
 

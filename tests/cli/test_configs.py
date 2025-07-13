@@ -3,6 +3,7 @@ Test configs.py
 """
 
 from typer.testing import CliRunner
+
 from tidycode.cli.commands.configs import app as configs_app
 from tidycode.utils import load_toml_file
 

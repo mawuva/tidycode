@@ -2,10 +2,12 @@
 Test the fake YAML adapter.
 """
 
-from tidycode.core.yaml import YAMLAdapter, YAMLManager
 from pathlib import Path
 from typing import Dict
+
 import yaml
+
+from tidycode.core.yaml import YAMLAdapter, YAMLManager
 
 
 class FakeYamlAdapter(YAMLAdapter):

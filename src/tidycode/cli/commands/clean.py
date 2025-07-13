@@ -2,11 +2,13 @@
 Clean commands
 """
 
-import typer
-from pathlib import Path
-import shutil
-from tidycode.utils import EXCLUDE_DIRS, TARGETS
 import os
+import shutil
+from pathlib import Path
+
+import typer
+
+from tidycode.utils import EXCLUDE_DIRS, TARGETS
 
 app = typer.Typer(help="Clean temporary and unwanted files")
 

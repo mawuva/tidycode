@@ -1,7 +1,8 @@
 # tidycode/core/bootstrap.py
 
 from pathlib import Path
-from tidycode.utils import inject_tool_config_in_file, TOOLS_METADATA
+
+from tidycode.utils import TOOLS_METADATA, inject_tool_config_in_file
 
 
 def setup_tool_from_metadata(

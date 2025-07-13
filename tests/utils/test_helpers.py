@@ -7,34 +7,34 @@ import subprocess
 import pytest
 from pytest_mock import MockerFixture
 
-from tidycode.utils import (
-    run_command,
-    write_file_if_missing,
-    ask_checkbox,
-    ask_confirm,
-)
+from tidycode.utils import ask_checkbox, ask_confirm, run_command, write_file_if_missing
 
 
 def test_run_command_default_check(mocker: MockerFixture, capsys):
-    """Test run_command with default check=True."""
     mock_run = mocker.patch("subprocess.run")
     command = ["echo", "hello"]
 
     run_command(command)
 
-    mock_run.assert_called_once_with(command, check=True)
+    mock_run.assert_called_once()
+    called_args, called_kwargs = mock_run.call_args
+    assert called_args[0] == command
+    assert called_kwargs.get("check") is True
+
     captured = capsys.readouterr()
     assert "📦 Running: echo hello" in captured.out
 
 
 def test_run_command_check_false(mocker: MockerFixture):
-    """Test run_command with check=False."""
     mock_run = mocker.patch("subprocess.run")
     command = ["ls", "-la"]
 
     run_command(command, check=False)
 
-    mock_run.assert_called_once_with(command, check=False)
+    mock_run.assert_called_once()
+    called_args, called_kwargs = mock_run.call_args
+    assert called_args[0] == command
+    assert called_kwargs.get("check") is False
 
 
 def test_run_command_raises_error(mocker: MockerFixture):

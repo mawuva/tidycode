@@ -1,4 +1,5 @@
 import pytest
+
 from tidycode.core.bootstrap import setup_commitizen
 from tidycode.utils import load_toml_file
 

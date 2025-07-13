@@ -2,12 +2,14 @@
 Editor for toml files
 """
 
-from typing import Any, Dict
 from copy import deepcopy
-from tomlkit import table
-from .toml_config_diff import diff_configs, format_config_diff
-from .toml_helpers import load_toml_file, save_toml_file, PYPROJECT_PATH
 from pathlib import Path
+from typing import Any, Dict
+
+from tomlkit import table
+
+from .toml_config_diff import diff_configs, format_config_diff
+from .toml_helpers import PYPROJECT_PATH, load_toml_file, save_toml_file
 
 
 def inject_toml_config(

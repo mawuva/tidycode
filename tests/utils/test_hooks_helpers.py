@@ -3,7 +3,8 @@ Test hooks helpers.
 """
 
 import pytest
-from tidycode.utils import get_installed_hook_keys, add_hooks, remove_hooks, HOOKS
+
+from tidycode.utils import HOOKS, add_hooks, get_installed_hook_keys, remove_hooks
 
 
 @pytest.fixture

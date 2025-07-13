@@ -2,9 +2,10 @@
 Test the ruamel.yaml adapter.
 """
 
-from tidycode.core.yaml import RuamelYAMLAdapter
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+from tidycode.core.yaml import RuamelYAMLAdapter
 
 
 def test_ruamel_adapter_load_and_dump_str():

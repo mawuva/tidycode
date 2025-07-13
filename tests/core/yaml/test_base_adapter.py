@@ -2,7 +2,7 @@
 Test the base adapter interface.
 """
 
-from tidycode.core.yaml import YAMLAdapter, PyYAMLAdapter, RuamelYAMLAdapter
+from tidycode.core.yaml import PyYAMLAdapter, RuamelYAMLAdapter, YAMLAdapter
 
 
 def test_adapters_implement_interface():

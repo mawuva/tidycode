@@ -3,13 +3,13 @@ Test toml_helpers.py
 """
 
 from tidycode.utils import (
-    load_toml_file,
-    save_toml_file,
-    has_tool_section,
     get_tool_section,
-    set_tool_section,
+    has_tool_section,
+    load_toml_file,
     remove_tool_section,
     remove_tool_section_and_return,
+    save_toml_file,
+    set_tool_section,
 )
 
 

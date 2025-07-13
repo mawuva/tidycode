@@ -2,10 +2,11 @@
 Adapter for ruamel.yaml.
 """
 
+from io import StringIO
 from pathlib import Path
 from typing import Any
+
 from ruamel.yaml import YAML, CommentedSeq
-from io import StringIO
 
 from .base import YAMLAdapter
 

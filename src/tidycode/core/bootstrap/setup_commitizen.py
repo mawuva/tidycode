@@ -2,17 +2,17 @@
 Setup Commitizen
 """
 
-from typing import Callable
 from pathlib import Path
+from typing import Callable
 
 from tidycode.utils import (
-    run_command,
-    load_toml_file,
-    save_toml_file,
-    inject_toml_config,
-    get_tool_section,
     PYPROJECT_PATH,
     TOOLS_METADATA,
+    get_tool_section,
+    inject_toml_config,
+    load_toml_file,
+    run_command,
+    save_toml_file,
 )
 
 

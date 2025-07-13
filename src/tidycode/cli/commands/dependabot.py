@@ -2,8 +2,10 @@
 Dependabot commands
 """
 
-import typer
 from pathlib import Path
+
+import typer
+
 from tidycode.core.bootstrap import setup_dependabot
 from tidycode.utils import DEPENDABOT_PATH
 

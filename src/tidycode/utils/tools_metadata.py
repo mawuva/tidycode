@@ -21,10 +21,7 @@ TOOLS_METADATA = {
             "tool": {
                 "ruff": {
                     "line-length": 88,
-                    "target-version": ["py38"],
-                    "select": ["E", "F", "W", "I"],
-                    "ignore": ["E501"],
-                    "quote-style": "double",
+                    "target-version": "py38",
                     "exclude": [
                         "migrations",
                         ".venv",
@@ -34,7 +31,11 @@ TOOLS_METADATA = {
                         "dist",
                         "build",
                     ],
-                }
+                },
+                "ruff.lint": {
+                    "select": ["E", "F", "W", "I"],
+                    "ignore": ["E501"],
+                },
             }
         }
     },
@@ -67,6 +68,26 @@ TOOLS_METADATA = {
                 "isort": {
                     "profile": "black",
                     "line_length": 88,
+                }
+            }
+        }
+    },
+    "mypy": {
+        "pyproject_config": {
+            "tool": {
+                "mypy": {
+                    "python_version": "3.8",
+                    "strict": True,
+                    "ignore_missing_imports": True,
+                    "disallow_untyped_defs": False,
+                    "check_untyped_defs": True,
+                    "no_implicit_optional": True,
+                    "warn_unused_ignores": True,
+                    "warn_return_any": True,
+                    "warn_redundant_casts": True,
+                    "warn_unused_configs": True,
+                    "show_error_codes": True,
+                    "pretty": True,
                 }
             }
         }

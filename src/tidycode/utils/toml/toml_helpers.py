@@ -4,9 +4,10 @@ Helper functions for toml files
 
 from pathlib import Path
 from typing import Any, Dict
+
+from tomlkit import dumps, parse, table
+
 from ..constants import PYPROJECT_PATH
-from tomlkit import table, dumps, parse
-import re
 
 
 def toml_dump(data: dict) -> str:
@@ -29,14 +30,22 @@ def load_toml_file(path: Path = None) -> Dict[str, Any]:
 
 
 def save_toml_file(data: Dict[str, Any], path: Path = None) -> None:
-    """Save the toml file."""
+    """Save the toml file with a newline between each top-level section."""
     toml_file_path = path or PYPROJECT_PATH
-    raw = toml_dump(data)
+    raw = toml_dump(data).strip()
 
-    formatted = re.sub(r"\n(?=\[)", "\n\n", raw)
+    # For clean formatting: ensure one blank line before each new [section]
+    lines = raw.splitlines()
+    output_lines = []
+    for i, line in enumerate(lines):
+        if line.startswith("[") and output_lines and output_lines[-1].strip():
+            output_lines.append("")  # insert blank line before section
+        output_lines.append(line)
+
+    content = "\n".join(output_lines) + "\n"
 
     with toml_file_path.open("w", encoding="utf-8") as f:
-        f.write(formatted.strip() + "\n")
+        f.write(content)
 
 
 def has_tool_section(data: Dict[str, Any], tool: str) -> bool:

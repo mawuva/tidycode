@@ -3,8 +3,8 @@ Run Dependabot setup
 """
 
 from pathlib import Path
-from tidycode.utils import DEPENDABOT_PATH, write_file_if_missing
 
+from tidycode.utils import DEPENDABOT_PATH, write_file_if_missing
 
 DEFAULT_DEPENDABOT_YML = """
 version: 2

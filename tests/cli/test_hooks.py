@@ -1,8 +1,10 @@
 import os
+
 import pytest
 from typer.testing import CliRunner
+
 from tidycode.cli.main import app
-from tidycode.utils import HOOKS, yaml_dump, yaml_load, get_iter_hook_with_yaml
+from tidycode.utils import HOOKS, get_iter_hook_with_yaml, yaml_dump, yaml_load
 
 runner = CliRunner()
 

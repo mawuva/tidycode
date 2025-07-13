@@ -2,13 +2,15 @@
 Utils for YAML.
 """
 
-from typing import Union, Dict, Any, Optional
 from pathlib import Path
-from .adapters.base import YAMLAdapter
-from .manager import YAMLManager
-from .adapters.ruamel_adapter import RuamelYAMLAdapter
-from .adapters.pyyaml_adapter import PyYAMLAdapter
+from typing import Any, Dict, Optional, Union
+
 from tidycode.utils import CONFIG_FILE_PATH
+
+from .adapters.base import YAMLAdapter
+from .adapters.pyyaml_adapter import PyYAMLAdapter
+from .adapters.ruamel_adapter import RuamelYAMLAdapter
+from .manager import YAMLManager
 
 
 def get_manager(adapter: Union[str, YAMLAdapter, None] = None) -> YAMLManager:

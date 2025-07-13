@@ -77,7 +77,7 @@ HOOKS = {
         "name": "isort Import Sorter",
         "yaml": {
             "repo": "https://github.com/pre-commit/mirrors-isort",
-            "rev": "v5.12.0",
+            "rev": "v6.0.1",
             "hooks": [{"id": "isort"}],
         },
     },

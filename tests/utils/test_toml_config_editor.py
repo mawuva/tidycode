@@ -2,13 +2,15 @@
 Test toml_config_editor.py
 """
 
+from pathlib import Path
+
 import pytest
+
 from tidycode.utils import (
     inject_toml_config,
     inject_tool_config,
     inject_tool_config_in_file,
 )
-from pathlib import Path
 
 
 @pytest.fixture

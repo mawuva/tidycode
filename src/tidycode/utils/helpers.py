@@ -5,14 +5,17 @@ Utils functions
 import subprocess
 from pathlib import Path
 from typing import List, Tuple
+
 import questionary
 from yaml import safe_dump, safe_load
 
 
-def run_command(command: list[str], check: bool = True) -> None:
+def run_command(
+    command: list[str], check: bool = True, cwd: Path | None = None
+) -> None:
     """Wrapper around subprocess.run with print."""
     print(f"📦 Running: {' '.join(command)}")
-    subprocess.run(command, check=check)
+    subprocess.run(command, check=check, cwd=cwd)
 
 
 def print_msg(msg: str, quiet: bool = False, debug: bool = False) -> None:

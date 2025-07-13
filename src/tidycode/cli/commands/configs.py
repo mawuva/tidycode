@@ -2,13 +2,15 @@
 Manage project configuration files like pyproject.toml
 """
 
-import typer
 from pathlib import Path
+
+import typer
+
 from tidycode.utils import (
-    load_toml_file,
+    PYPROJECT_PATH,
     diff_configs,
     format_config_diff,
-    PYPROJECT_PATH,
+    load_toml_file,
     remove_tool_section_and_return,
     save_toml_file,
 )
@@ -108,7 +110,7 @@ def remove_section(
     original_sections = list(pyproject.get("tool", {}).keys())
 
     pyproject = remove_tool_section_and_return(pyproject, section)
-    new_sections = list(pyproject.get("tool", {}).keys())
+    list(pyproject.get("tool", {}).keys())
 
     if section not in original_sections:
         typer.echo(f"⚠️ Section [tool.{section}] not found in pyproject.toml")
