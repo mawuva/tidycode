@@ -2,6 +2,7 @@
 Main CLI
 """
 
+import subprocess
 import typer
 
 from .commands import clean, commitizen, configs, dependabot, hooks, quality
@@ -28,6 +29,17 @@ def init():
 def reset():
     """Reset the project to the initial state"""
     clean.clean_all()
+
+@app.command("cov")
+def cov(
+    path: str = "src/tidycode",
+    html: bool = typer.Option(False, help="Generate an HTML report")
+):
+    """Run pytest with coverage."""
+    command = ["pytest", f"--cov={path}", "--cov-report=term-missing"]
+    if html:
+        command.append("--cov-report=html")
+    subprocess.run(command, check=True)
 
 def main():
     app()
