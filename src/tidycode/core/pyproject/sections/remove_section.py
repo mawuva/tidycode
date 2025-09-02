@@ -5,12 +5,12 @@ Remove a section from the pyproject.toml file.
 from typing import Optional
 
 from tidycode.changelog import ChangeLogManager
-from tidycode.settings import YesNo
 from tidycode.core.pyproject.types import RemoveSectionChoices
 from tidycode.core.pyproject.utils.helpers import get_keys
 from tidycode.core.pyproject.utils.key_actions import handle_key_deletion
 from tidycode.core.pyproject.utils.section_utils import select_section
 from tidycode.core.toml import TomlFileManager
+from tidycode.settings import YesNo
 from tidycode.utils import ask_action, ask_choice, print_error, print_success
 
 changelog = ChangeLogManager()

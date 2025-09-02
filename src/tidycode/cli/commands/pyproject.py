@@ -4,13 +4,13 @@ Commands for the pyproject.toml file.
 
 import typer
 
-from tidycode.core.toml import TomlFileManager
-from tidycode.settings import PYPROJECT_FILE_PATH
 from tidycode.core.pyproject.sections import (
     add_config_section,
-    set_config_section,
     remove_config_section,
+    set_config_section,
 )
+from tidycode.core.toml import TomlFileManager
+from tidycode.settings import PYPROJECT_FILE_PATH
 
 app = typer.Typer(
     help="Manage the pyproject.toml file",
@@ -40,7 +40,7 @@ def set_section(
     """
 
     set_config_section(pyproject_manager, section_name)
-    
+
 
 @app.command("remove-section", help="Remove a section in the pyproject.toml")
 def remove_section(
@@ -51,4 +51,3 @@ def remove_section(
     """
 
     remove_config_section(pyproject_manager, section_name)
-
