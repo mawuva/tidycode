@@ -9,6 +9,7 @@ from tidycode.settings import PYPROJECT_FILE_PATH
 from tidycode.core.pyproject.sections import (
     add_config_section,
     set_config_section,
+    remove_config_section,
 )
 
 app = typer.Typer(
@@ -39,3 +40,15 @@ def set_section(
     """
 
     set_config_section(pyproject_manager, section_name)
+    
+
+@app.command("remove-section", help="Remove a section in the pyproject.toml")
+def remove_section(
+    section_name: str = typer.Argument(None, help="The section name to remove")
+):
+    """
+    Remove a section from the pyproject.toml file and log all changes.
+    """
+
+    remove_config_section(pyproject_manager, section_name)
+
