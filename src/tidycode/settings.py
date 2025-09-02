@@ -15,3 +15,12 @@ class YesNo(BaseEnum):
 
     YES = "yes"
     NO = "no"
+
+
+class ToolsSupported(BaseEnum):
+    """Tools supported by TidyCode"""
+
+    BLACK = "black"
+    RUFF = "ruff"
+    ISORT = "isort"
+    MYPY = "mypy"
