@@ -41,4 +41,11 @@ build-backend = "poetry.core.masonry.api"
 name = "data"
 desc = "somehint"
 role = "give insight"
+type = "dty"
+f = "vg"
+
+[data.tool]
+name = "tool"
+desc = "ins"
+dde = "ff"
 
