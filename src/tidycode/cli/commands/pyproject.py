@@ -6,8 +6,10 @@ import typer
 
 from tidycode.core.pyproject.sections import (
     add_config_section,
+    list_config_sections,
     remove_config_section,
     set_config_section,
+    show_config_section,
 )
 from tidycode.core.toml import TomlFileManager
 from tidycode.settings import PYPROJECT_FILE_PATH
@@ -40,6 +42,26 @@ def set_section(
     """
 
     set_config_section(pyproject_manager, section_name)
+
+
+@app.command("list-sections", help="List all sections in the pyproject.toml")
+def list_sections():
+    """
+    List all sections from the pyproject.toml file.
+    """
+
+    list_config_sections(pyproject_manager, interactive=False)
+
+
+@app.command("show-section", help="Show a section in the pyproject.toml")
+def show_section(
+    section_name: str = typer.Argument(None, help="The section name to show")
+):
+    """
+    Show a section in the pyproject.toml file.
+    """
+
+    show_config_section(pyproject_manager, section_name)
 
 
 @app.command("remove-section", help="Remove a section in the pyproject.toml")

@@ -37,13 +37,3 @@ tidy = "tidycode.cli.main:app"
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[data]
-name = "data"
-desc = "somehint"
-role = "give insight"
-
-[data.tool]
-name = "tool"
-desc = "ins"
-dde = "ff"
-
