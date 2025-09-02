@@ -6,9 +6,9 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from tidycode.settings import YesNo
 from tidycode.core.pyproject.sections.remove_section import remove_config_section
 from tidycode.core.pyproject.types import RemoveSectionChoices
+from tidycode.settings import YesNo
 
 
 def test_remove_config_section_non_interactive_with_section_name():

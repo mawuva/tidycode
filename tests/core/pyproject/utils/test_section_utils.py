@@ -4,12 +4,12 @@ TidyCode Core PyProject Section Utils Tests
 
 from unittest.mock import Mock, patch
 
-from tidycode.settings import YesNo
 from tidycode.core.pyproject.types import OverwriteChoice
 from tidycode.core.pyproject.utils.section_utils import (
     collect_section_data,
     collect_subsection_data,
 )
+from tidycode.settings import YesNo
 
 
 def test_collect_subsection_data_with_name():

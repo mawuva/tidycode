@@ -5,10 +5,7 @@ TidyCode Core PyProject Prompt Tests
 from unittest.mock import patch
 
 from tidycode.core.pyproject.types import GlobalActions, Mode
-from tidycode.core.pyproject.utils.prompt import (
-    prompt_global_action,
-    prompt_key_values,
-)
+from tidycode.core.pyproject.utils.prompt import prompt_global_action, prompt_key_values
 
 
 def test_prompt_global_action():
