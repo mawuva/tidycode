@@ -8,11 +8,7 @@ from unittest import mock
 
 import pytest
 
-from tidycode.utils.helpers import (
-    ensure_file_exists,
-    join_dot_key,
-    split_dot_key,
-)
+from tidycode.utils.helpers import ensure_file_exists, join_dot_key, split_dot_key
 
 # ---------------------------
 # Unit tests
@@ -161,7 +157,7 @@ def test_ensure_file_exists_new_file(tmp_path):
     """
     file_path = tmp_path / "new_file.txt"
     result = ensure_file_exists(file_path)
-    
+
     assert result == file_path
     assert file_path.exists()
     assert file_path.read_text(encoding="utf-8") == ""
@@ -178,7 +174,7 @@ def test_ensure_file_exists_new_file_with_content(tmp_path):
     file_path = tmp_path / "new_file.txt"
     content = "Hello, World!"
     result = ensure_file_exists(file_path, content)
-    
+
     assert result == file_path
     assert file_path.exists()
     assert file_path.read_text(encoding="utf-8") == content
@@ -195,9 +191,9 @@ def test_ensure_file_exists_existing_file(tmp_path):
     file_path = tmp_path / "existing_file.txt"
     original_content = "Original content"
     file_path.write_text(original_content, encoding="utf-8")
-    
+
     result = ensure_file_exists(file_path, "New content")
-    
+
     assert result == file_path
     assert file_path.exists()
     assert file_path.read_text(encoding="utf-8") == original_content
@@ -213,7 +209,7 @@ def test_ensure_file_exists_string_path(tmp_path):
     """
     file_path = str(tmp_path / "string_path.txt")
     result = ensure_file_exists(file_path, "String path content")
-    
+
     assert isinstance(result, Path)
     assert result.exists()
     assert result.read_text(encoding="utf-8") == "String path content"
@@ -229,7 +225,7 @@ def test_ensure_file_exists_nested_directories(tmp_path):
     """
     file_path = tmp_path / "nested" / "deep" / "file.txt"
     result = ensure_file_exists(file_path, "Nested content")
-    
+
     assert result == file_path
     assert file_path.exists()
     assert file_path.read_text(encoding="utf-8") == "Nested content"
@@ -244,8 +240,10 @@ def test_ensure_file_exists_mkdir_error(tmp_path):
         Error is propagated.
     """
     file_path = tmp_path / "subdir" / "file.txt"
-    
-    with mock.patch("pathlib.Path.mkdir", side_effect=PermissionError("Permission denied")):
+
+    with mock.patch(
+        "pathlib.Path.mkdir", side_effect=PermissionError("Permission denied")
+    ):
         with pytest.raises(PermissionError) as exc_info:
             ensure_file_exists(file_path, "content")
         assert "Permission denied" in str(exc_info.value)
@@ -260,7 +258,7 @@ def test_ensure_file_exists_write_error(tmp_path):
         Error is propagated.
     """
     file_path = tmp_path / "file.txt"
-    
+
     with mock.patch("pathlib.Path.write_text", side_effect=OSError("Write failed")):
         with pytest.raises(OSError) as exc_info:
             ensure_file_exists(file_path, "content")
@@ -283,7 +281,7 @@ def test_split_and_join_dot_key_roundtrip():
     original_key = "section.subsection.key"
     path, key_name = split_dot_key(original_key)
     result = join_dot_key(path, key_name)
-    
+
     assert result == original_key
 
 
@@ -298,7 +296,7 @@ def test_split_and_join_dot_key_complex():
     original_key = "a.b.c.d.e.f.g.h.i.j.k"
     path, key_name = split_dot_key(original_key)
     result = join_dot_key(path, key_name)
-    
+
     assert result == original_key
 
 
@@ -313,7 +311,7 @@ def test_ensure_file_exists_with_unicode_content(tmp_path):
     file_path = tmp_path / "unicode_file.txt"
     unicode_content = "Hello, 世界! 🌍 ñöç"
     result = ensure_file_exists(file_path, unicode_content)
-    
+
     assert result == file_path
     assert file_path.exists()
     assert file_path.read_text(encoding="utf-8") == unicode_content
@@ -332,7 +330,7 @@ def test_ensure_file_exists_multiple_files(tmp_path):
         (tmp_path / "file2.txt", "Content 2"),
         (tmp_path / "file3.txt", "Content 3"),
     ]
-    
+
     for file_path, content in files:
         result = ensure_file_exists(file_path, content)
         assert result == file_path
@@ -352,14 +350,14 @@ def test_ensure_file_exists_relative_paths(tmp_path):
     original_cwd = os.getcwd()
     try:
         os.chdir(tmp_path)
-        
+
         # Test relative path
         rel_path = Path("relative_file.txt")
         result = ensure_file_exists(rel_path, "Relative content")
-        
+
         assert result == rel_path
         assert rel_path.exists()
         assert rel_path.read_text(encoding="utf-8") == "Relative content"
-        
+
     finally:
         os.chdir(original_cwd)
