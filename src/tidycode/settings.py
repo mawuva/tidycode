@@ -3,6 +3,7 @@ TidyCode settings.
 """
 
 from pathlib import Path
+
 from tidycode.utils import BaseEnum
 
 PYPROJECT_FILE_PATH = Path("pyproject.toml")

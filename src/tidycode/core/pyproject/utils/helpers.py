@@ -2,8 +2,8 @@
 Helpers for the pyproject module.
 """
 
-from typing import Dict, Any, Generator
 from pathlib import Path
+from typing import Any, Dict, Generator
 
 from tidycode.core.pyproject.types import (
     PyProjectHiddenSections,
@@ -13,6 +13,7 @@ from tidycode.core.pyproject.types import (
 from tidycode.core.toml import TomlFileManager
 from tidycode.settings import PYPROJECT_FILE_PATH
 
+
 def has_subsections(data: Dict[str, Any]) -> bool:
     """Check if the data has subsections."""
     return any(isinstance(value, dict) for value in data.values())
@@ -21,7 +22,6 @@ def has_subsections(data: Dict[str, Any]) -> bool:
 def list_subsections(data: Dict[str, Any]) -> list[str]:
     """List the subsections of the data."""
     return [key for key, value in data.items() if isinstance(value, dict)]
-
 
 
 def get_section_keys(data: Dict[str, Any], hidden_keys: list[str] = []) -> list[str]:

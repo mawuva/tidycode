@@ -6,9 +6,13 @@ from typing import Any, Dict, Optional
 
 from tomlkit.items import Table
 
+from tidycode.changelog import ChangeLogManager
+from tidycode.core.pyproject.types import OverwriteChoice
+from tidycode.core.pyproject.utils.display import print_section_summary
+from tidycode.core.pyproject.utils.helpers import has_subsections, list_subsections
+from tidycode.core.pyproject.utils.section_utils import collect_section_data
 from tidycode.core.toml import TomlFileManager
 from tidycode.plugins.config import ConfigProvider
-from tidycode.changelog import ChangeLogManager
 from tidycode.utils import (
     ask_action,
     ask_text,
@@ -16,11 +20,6 @@ from tidycode.utils import (
     print_success,
     print_warning,
 )
-from tidycode.core.pyproject.utils.helpers import has_subsections, list_subsections
-from tidycode.core.pyproject.types import OverwriteChoice
-from tidycode.core.pyproject.utils.section_utils import collect_section_data
-from tidycode.core.pyproject.utils.display import print_section_summary
-
 
 changelog = ChangeLogManager()
 
@@ -48,7 +47,7 @@ def add_config_section(
         initial_data: Predefined dict to insert (used when interactive=False)
         interactive: If False, disables all prompts
     """
-    
+
     # 1. Get the section name
     if plugin:
         section_name = plugin.get_name()
@@ -60,7 +59,7 @@ def add_config_section(
         return None
 
     full_name = f"{prefix}{section_name}" if prefix else section_name
-    
+
     # 2. Check if the section already exists
     existing = manager.get_section(full_name) or {}
     overwrite_choice = None

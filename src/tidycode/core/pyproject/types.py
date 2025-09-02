@@ -4,6 +4,7 @@ Types for the pyproject module.
 
 from tidycode.utils import BaseEnum
 
+
 class OverwriteChoice(BaseEnum):
     """Choice for overwriting an existing section."""
 
@@ -38,7 +39,6 @@ class KeyActions(BaseEnum):
     EDIT = "edit"
     REMOVE = "remove"
     SKIP = "skip"
-
 
 
 class PyProjectHiddenSections(BaseEnum):
@@ -90,5 +90,3 @@ class RemoveSectionChoices(BaseEnum):
     ENTIRE_SECTION = "entire section"
     KEYS_ONLY = "keys only"
     EXIT = "exit"
-
-

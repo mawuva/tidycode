@@ -5,11 +5,11 @@ Utils for the pyproject section.
 from typing import Any, Dict, Optional
 
 from tidycode.changelog import ChangeLogManager
-from tidycode.settings import YesNo
-from tidycode.plugins.config import ConfigProvider
 from tidycode.core.pyproject.types import Mode, OverwriteChoice, PyProjectHiddenSections
 from tidycode.core.pyproject.utils.prompt import prompt_key_values
 from tidycode.core.toml import TomlFileManager
+from tidycode.plugins.config import ConfigProvider
+from tidycode.settings import YesNo
 from tidycode.utils import ask_action, ask_choice, ask_text, print_error
 
 changelog = ChangeLogManager()

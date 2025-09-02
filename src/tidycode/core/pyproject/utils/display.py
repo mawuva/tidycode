@@ -10,11 +10,7 @@ from rich.console import Console
 from rich.table import Table
 
 from tidycode.core.pyproject.types import PrintSectionSummaryMode
-from tidycode.core.pyproject.utils.helpers import (
-    filter_dict,
-    get_keys,
-    iter_key_values,
-)
+from tidycode.core.pyproject.utils.helpers import filter_dict, get_keys, iter_key_values
 from tidycode.utils import pretty_print, print_info, print_title
 
 console = Console()

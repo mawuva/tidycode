@@ -18,9 +18,9 @@ Functions:
 
 from typing import Dict, Optional
 
-from tidycode.settings import YesNo
 from tidycode.core.pyproject.types import GlobalActions, Mode
 from tidycode.core.pyproject.utils.key_actions import handle_key_action
+from tidycode.settings import YesNo
 from tidycode.utils import (
     ask_action,
     ask_text,

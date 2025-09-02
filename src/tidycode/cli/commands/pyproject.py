@@ -4,11 +4,9 @@ Commands for the pyproject.toml file.
 
 import typer
 
-from tidycode.settings import PYPROJECT_FILE_PATH
-from tidycode.core.pyproject.sections import (
-    add_config_section,
-)
+from tidycode.core.pyproject.sections import add_config_section
 from tidycode.core.toml import TomlFileManager
+from tidycode.settings import PYPROJECT_FILE_PATH
 
 app = typer.Typer(
     help="Manage the pyproject.toml file",

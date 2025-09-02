@@ -2,10 +2,11 @@
 Base class for config providers.
 """
 
-from typing import Any, Dict
 from abc import abstractmethod
+from typing import Any, Dict
 
 from tidycode.plugins.base import BasePlugin
+
 
 class ConfigProvider(BasePlugin):
     """Interface for plugins that provide config data for the pyproject.toml file."""
