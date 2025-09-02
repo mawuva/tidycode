@@ -1,7 +1,7 @@
 [project]
 name = "tidycode"
 version = "0.1.0"
-description = ""
+description = "A fun and simple CLI to keep your Python projects clean and secure (format, lint, test, doctor, etc.)"
 authors = [
     {name = "Ephraim Seddor",email = "seddorephraim7@gmail.com"}
 ]
