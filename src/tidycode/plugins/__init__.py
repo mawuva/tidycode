@@ -2,6 +2,6 @@
 Plugins module.
 """
 
-from .registry import registry, register_plugin
+from .registry import register_plugin, registry
 
 __all__ = ["registry", "register_plugin"]

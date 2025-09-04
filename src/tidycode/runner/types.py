@@ -11,6 +11,7 @@ class SubprocessResult:
     """
     Subprocess result.
     """
+
     display_name: str
     status: str
     stdout: str = ""
@@ -18,5 +19,3 @@ class SubprocessResult:
     category: Optional[str] = None
     summary: Optional[str] = None
     details: Optional[str] = None
-
-

@@ -16,14 +16,14 @@ def status_color(status: str) -> str:
 
 
 def status_from_returncode(
-    display_name: str, 
-    return_code: int, 
-    stdout: str, 
+    display_name: str,
+    return_code: int,
+    stdout: str,
     is_tool: bool,
 ) -> str:
     """
     Get the status from the return code.
-    
+
     Args:
         display_name: name of the command
         return_code: return code of the command
@@ -65,21 +65,17 @@ def build_result(
     stderr_clean = stderr.encode("utf-8", errors="replace").decode("utf-8")
 
     status = status_from_returncode(display_name, return_code, stdout, is_tool)
-    
+
     return SubprocessResult(
         display_name=display_name,
         status=status,
-        return_code=return_code,
         stdout=stdout_clean.strip(),
         stderr=stderr_clean.strip(),
     )
-    
-    
+
+
 def handle_exception(
-    e: Exception, 
-    display_name: str, 
-    is_tool: bool = True, 
-    verbose: bool = False
+    e: Exception, display_name: str, is_tool: bool = True, verbose: bool = False
 ) -> SubprocessResult:
     """
     Return standardized result on exception.
@@ -92,18 +88,18 @@ def handle_exception(
     Returns:
         SubprocessResult: standardized result
     """
-    
+
     msg = (
         str(e)
         if not isinstance(e, FileNotFoundError)
         else f"Command not found: {display_name}"
     )
-    
+
     if verbose:
         print_warning(msg)
 
     return_code = 127 if isinstance(e, FileNotFoundError) else 1
-    
+
     return build_result(
         display_name,
         return_code=return_code,

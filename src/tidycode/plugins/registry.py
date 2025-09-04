@@ -2,7 +2,7 @@
 Plugin registry.
 """
 
-from typing import Callable, Dict, List, Type
+from typing import Callable, Dict, List, Optional, Type
 
 from tidycode.plugins.base import BasePlugin
 from tidycode.plugins.types import PluginMeta
@@ -13,13 +13,13 @@ class PluginRegistry:
     Plugin registry.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._plugins: Dict[str, BasePlugin] = {}
 
-    def register(self, plugin: BasePlugin):
+    def register(self, plugin: BasePlugin) -> None:
         self._plugins[plugin.meta.name] = plugin
 
-    def get(self, name: str) -> BasePlugin:
+    def get(self, name: str) -> Optional[BasePlugin]:
         return self._plugins[name]
 
     def all(self) -> List[BasePlugin]:
@@ -35,13 +35,19 @@ class PluginRegistry:
 registry = PluginRegistry()
 
 
-def register_plugin(name: str, description: str = "", type: str = "generic", category: str = "default") -> Callable[[Type[BasePlugin]], Type[BasePlugin]]:
+def register_plugin(
+    name: str, description: str = "", type: str = "generic", category: str = "default"
+) -> Callable[[Type[BasePlugin]], Type[BasePlugin]]:
     """
     Decorator to register a plugin.
     """
+
     def decorator(cls: Type[BasePlugin]):
-        cls.meta = PluginMeta(name=name, description=description, type=type, category=category)
+        cls.meta = PluginMeta(
+            name=name, description=description, type=type, category=category
+        )
         instance = cls()
         registry.register(instance)
         return cls
+
     return decorator
