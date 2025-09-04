@@ -33,7 +33,11 @@ class PreCommitManager:
         """Return a list of all hook IDs defined in the YAML file."""
         hooks = []
         for repo in self.yaml_file_manager.get_key("repos", default=[]):
-            hooks.extend([h["id"] for h in repo.get("hooks", [])])
+            for h in repo.get("hooks", []):
+                if isinstance(h, dict):
+                    hooks.append(h["id"])
+                elif isinstance(h, str):
+                    hooks.append(h)
         return hooks
 
     def add_hook(self, repo: str, rev: str, hooks: List[Dict]) -> None:
