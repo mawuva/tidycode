@@ -1,0 +1,3 @@
+"""
+Plugins runner tests package.
+"""
