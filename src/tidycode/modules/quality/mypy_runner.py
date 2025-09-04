@@ -1,5 +1,5 @@
 """
-Ruff runner.
+Mypy runner.
 """
 
 from pathlib import Path
@@ -10,14 +10,14 @@ from tidycode.plugins.runner import BaseRunner
 
 
 @register_plugin(
-    name="ruff",
-    description="Ruff runner.",
+    name="mypy",
+    description="Mypy runner.",
     type="runner",
     category="quality",
 )
-class RuffRunner(BaseRunner):
+class MypyRunner(BaseRunner):
     """
-    Ruff runner.
+    Mypy runner.
     """
 
     def build_command(
@@ -30,7 +30,7 @@ class RuffRunner(BaseRunner):
         """
         Build the command to run.
         """
-        cmd = ["ruff", "check"]
-        if not check_only:
-            cmd.append("--fix")
+        cmd = ["mypy"]
+        if target is not None:
+            cmd.append(str(target))
         return cmd

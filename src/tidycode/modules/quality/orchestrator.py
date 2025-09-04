@@ -26,7 +26,7 @@ def run_quality_tools(
     commands_to_run: List[CommandSpec] = []
 
     target: Path = configs.get("target", ".")
-    check_only: bool = configs.get("check_only", check_only)
+    config_check_only: bool = configs.get("check_only", check_only)
     tools = configs.get("tools", []) if tools is None else tools
 
     load_plugins_from("tidycode.modules.quality")
@@ -41,14 +41,16 @@ def run_quality_tools(
         tool = next(p for p in plugins if p.meta.name == tool_name)
 
         if tool:
-            commands_to_run.append(
-                CommandSpec(
-                    command=tool.build_command(target, check_only),
-                    tool_name=tool_name,
-                    cwd=target,
-                    is_tool=tool.is_tool(),
+            # Type check: ensure the plugin has the required methods
+            if hasattr(tool, "build_command") and hasattr(tool, "is_tool"):
+                commands_to_run.append(
+                    CommandSpec(
+                        command=tool.build_command(target, config_check_only),
+                        tool_name=tool_name,
+                        cwd=target,
+                        is_tool=tool.is_tool(),
+                    )
                 )
-            )
 
     # Determine the summary display mode
     if summary_display_mode is None:

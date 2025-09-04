@@ -1,7 +1,3 @@
-"""
-Ruff runner.
-"""
-
 from pathlib import Path
 from typing import Any, List, Optional
 
@@ -10,14 +6,14 @@ from tidycode.plugins.runner import BaseRunner
 
 
 @register_plugin(
-    name="ruff",
-    description="Ruff runner.",
+    name="isort",
+    description="Isort runner.",
     type="runner",
     category="quality",
 )
-class RuffRunner(BaseRunner):
+class IsortRunner(BaseRunner):
     """
-    Ruff runner.
+    Isort runner.
     """
 
     def build_command(
@@ -30,7 +26,9 @@ class RuffRunner(BaseRunner):
         """
         Build the command to run.
         """
-        cmd = ["ruff", "check"]
-        if not check_only:
-            cmd.append("--fix")
+        cmd = ["isort"]
+        if target is not None:
+            cmd.append(str(target))
+        if check_only:
+            cmd.append("--check-only")
         return cmd

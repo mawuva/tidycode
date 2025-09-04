@@ -30,8 +30,9 @@ class BlackRunner(BaseRunner):
         """
         Build the command to run.
         """
-        cmd = ["black", target]
+        cmd = ["black"]
+        if target is not None:
+            cmd.append(str(target))
         if check_only:
             cmd.append("--check")
-
         return cmd

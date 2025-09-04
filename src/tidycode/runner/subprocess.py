@@ -16,7 +16,7 @@ from .types import CommandSpec, SubprocessDisplayMode, SubprocessResult
 
 
 def run_command(
-    command: str,
+    command: List[str],
     display_name: Optional[str] = None,
     cwd: Optional[Path] = None,
     verbose: bool = False,
