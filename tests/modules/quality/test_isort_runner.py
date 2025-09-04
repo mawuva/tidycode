@@ -2,9 +2,7 @@
 Tests for IsortRunner.
 """
 
-import pytest
 from pathlib import Path
-from unittest import mock
 
 from tidycode.modules.quality.isort_runner import IsortRunner
 
@@ -38,9 +36,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["isort", str(target)]
 
     def test_isort_runner_build_command_without_target(self):
@@ -52,9 +50,9 @@ class TestIsortRunner:
             Command does not include target path.
         """
         runner = IsortRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["isort"]
 
     def test_isort_runner_build_command_with_check_only(self):
@@ -67,9 +65,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["isort", str(target), "--check-only"]
 
     def test_isort_runner_build_command_with_check_only_false(self):
@@ -82,9 +80,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, False)
-        
+
         assert command == ["isort", str(target)]
 
     def test_isort_runner_build_command_with_check_only_none(self):
@@ -97,9 +95,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["isort", str(target)]
 
     def test_isort_runner_build_command_with_args_and_kwargs(self):
@@ -112,16 +110,11 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(
-            target, 
-            True, 
-            "extra_arg1", 
-            "extra_arg2",
-            verbose=True,
-            debug=False
+            target, True, "extra_arg1", "extra_arg2", verbose=True, debug=False
         )
-        
+
         assert command == ["isort", str(target), "--check-only"]
 
     def test_isort_runner_build_command_empty_target(self):
@@ -134,9 +127,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["isort", "."]
 
     def test_isort_runner_build_command_unicode_target(self):
@@ -149,9 +142,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/à/fichier.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["isort", str(target)]
 
     def test_isort_runner_build_command_return_type(self):
@@ -164,9 +157,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert isinstance(command, list)
         assert all(isinstance(item, str) for item in command)
 
@@ -179,9 +172,9 @@ class TestIsortRunner:
             Command returns minimal list.
         """
         runner = IsortRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["isort"]
         assert len(command) == 1
 
@@ -195,9 +188,9 @@ class TestIsortRunner:
         """
         runner = IsortRunner()
         target = Path("/path/测试/文件.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["isort", str(target), "--check-only"]
 
     def test_isort_runner_with_register_plugin(self):
@@ -209,7 +202,7 @@ class TestIsortRunner:
             IsortRunner is registered with correct metadata.
         """
         runner = IsortRunner()
-        
+
         # Verify the plugin is registered
         assert runner.meta.name == "isort"
         assert runner.meta.description == "Isort runner."
@@ -226,11 +219,11 @@ class TestIsortRunner:
         """
         runner1 = IsortRunner()
         runner2 = IsortRunner()
-        
+
         target = Path("/path/to/file.py")
         command1 = runner1.build_command(target, True)
         command2 = runner2.build_command(target, False)
-        
+
         assert command1 == ["isort", str(target), "--check-only"]
         assert command2 == ["isort", str(target)]
         assert command1 != command2
@@ -244,11 +237,12 @@ class TestIsortRunner:
             IsortRunner is properly importable from different paths.
         """
         # Test direct import
-        from tidycode.modules.quality.isort_runner import IsortRunner as DirectIsortRunner
-        
         # Test import from module
         from tidycode.modules.quality import isort_runner
-        
+        from tidycode.modules.quality.isort_runner import (
+            IsortRunner as DirectIsortRunner,
+        )
+
         # Verify both imports work
         assert DirectIsortRunner is not None
         assert isort_runner.IsortRunner is not None

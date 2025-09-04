@@ -2,7 +2,6 @@
 Tests for orchestrator.
 """
 
-import pytest
 from pathlib import Path
 from unittest import mock
 
@@ -103,7 +102,11 @@ class TestRunQualityTools:
         mock_plugin3.build_command.return_value = ["mypy"]
         mock_plugin3.is_tool.return_value = True
 
-        mock_registry.by_category.return_value = [mock_plugin1, mock_plugin2, mock_plugin3]
+        mock_registry.by_category.return_value = [
+            mock_plugin1,
+            mock_plugin2,
+            mock_plugin3,
+        ]
 
         # Call function with specific tools
         run_quality_tools(tools=["black", "mypy"])
@@ -194,7 +197,9 @@ class TestRunQualityTools:
         # Verify run_multiple_commands was called with live=True
         call_args = mock_run_commands.call_args
         assert call_args[1]["live"] is True
-        assert call_args[1]["summary_display_mode"] == SubprocessDisplayMode.TABLE_MINIMAL
+        assert (
+            call_args[1]["summary_display_mode"] == SubprocessDisplayMode.TABLE_MINIMAL
+        )
 
     @mock.patch("tidycode.modules.quality.orchestrator.run_multiple_commands")
     @mock.patch("tidycode.modules.quality.orchestrator.registry")

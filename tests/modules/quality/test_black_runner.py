@@ -2,9 +2,7 @@
 Tests for BlackRunner.
 """
 
-import pytest
 from pathlib import Path
-from unittest import mock
 
 from tidycode.modules.quality.black_runner import BlackRunner
 
@@ -38,9 +36,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["black", str(target)]
 
     def test_black_runner_build_command_without_target(self):
@@ -52,9 +50,9 @@ class TestBlackRunner:
             Command does not include target path.
         """
         runner = BlackRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["black"]
 
     def test_black_runner_build_command_with_check_only(self):
@@ -67,9 +65,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["black", str(target), "--check"]
 
     def test_black_runner_build_command_with_check_only_false(self):
@@ -82,9 +80,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, False)
-        
+
         assert command == ["black", str(target)]
 
     def test_black_runner_build_command_with_check_only_none(self):
@@ -97,9 +95,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["black", str(target)]
 
     def test_black_runner_build_command_with_args_and_kwargs(self):
@@ -112,16 +110,11 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(
-            target, 
-            True, 
-            "extra_arg1", 
-            "extra_arg2",
-            verbose=True,
-            debug=False
+            target, True, "extra_arg1", "extra_arg2", verbose=True, debug=False
         )
-        
+
         assert command == ["black", str(target), "--check"]
 
     def test_black_runner_build_command_empty_target(self):
@@ -134,9 +127,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["black", "."]
 
     def test_black_runner_build_command_unicode_target(self):
@@ -149,9 +142,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/à/fichier.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["black", str(target)]
 
     def test_black_runner_build_command_return_type(self):
@@ -164,9 +157,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert isinstance(command, list)
         assert all(isinstance(item, str) for item in command)
 
@@ -179,9 +172,9 @@ class TestBlackRunner:
             Command returns minimal list.
         """
         runner = BlackRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["black"]
         assert len(command) == 1
 
@@ -195,9 +188,9 @@ class TestBlackRunner:
         """
         runner = BlackRunner()
         target = Path("/path/测试/文件.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["black", str(target), "--check"]
 
     def test_black_runner_with_register_plugin(self):
@@ -209,7 +202,7 @@ class TestBlackRunner:
             BlackRunner is registered with correct metadata.
         """
         runner = BlackRunner()
-        
+
         # Verify the plugin is registered
         assert runner.meta.name == "black"
         assert runner.meta.description == "Black runner."
@@ -226,11 +219,11 @@ class TestBlackRunner:
         """
         runner1 = BlackRunner()
         runner2 = BlackRunner()
-        
+
         target = Path("/path/to/file.py")
         command1 = runner1.build_command(target, True)
         command2 = runner2.build_command(target, False)
-        
+
         assert command1 == ["black", str(target), "--check"]
         assert command2 == ["black", str(target)]
         assert command1 != command2
@@ -244,11 +237,12 @@ class TestBlackRunner:
             BlackRunner is properly importable from different paths.
         """
         # Test direct import
-        from tidycode.modules.quality.black_runner import BlackRunner as DirectBlackRunner
-        
         # Test import from module
         from tidycode.modules.quality import black_runner
-        
+        from tidycode.modules.quality.black_runner import (
+            BlackRunner as DirectBlackRunner,
+        )
+
         # Verify both imports work
         assert DirectBlackRunner is not None
         assert black_runner.BlackRunner is not None

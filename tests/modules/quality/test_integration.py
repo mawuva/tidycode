@@ -2,15 +2,14 @@
 Integration tests for quality module.
 """
 
-import pytest
 from pathlib import Path
 from unittest import mock
 
 from tidycode.modules.quality.black_runner import BlackRunner
 from tidycode.modules.quality.isort_runner import IsortRunner
 from tidycode.modules.quality.mypy_runner import MypyRunner
-from tidycode.modules.quality.ruff_runner import RuffRunner
 from tidycode.modules.quality.orchestrator import run_quality_tools
+from tidycode.modules.quality.ruff_runner import RuffRunner
 
 
 class TestQualityModuleIntegration:
@@ -272,16 +271,17 @@ class TestQualityModuleIntegration:
             All runners are importable from their respective modules.
         """
         # Test direct imports
+        # Test module imports
+        from tidycode.modules.quality import (
+            black_runner,
+            isort_runner,
+            mypy_runner,
+            ruff_runner,
+        )
         from tidycode.modules.quality.black_runner import BlackRunner
         from tidycode.modules.quality.isort_runner import IsortRunner
         from tidycode.modules.quality.mypy_runner import MypyRunner
         from tidycode.modules.quality.ruff_runner import RuffRunner
-
-        # Test module imports
-        from tidycode.modules.quality import black_runner
-        from tidycode.modules.quality import isort_runner
-        from tidycode.modules.quality import mypy_runner
-        from tidycode.modules.quality import ruff_runner
 
         # Verify consistency
         assert BlackRunner is black_runner.BlackRunner

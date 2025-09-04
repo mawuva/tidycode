@@ -2,7 +2,6 @@
 Tests for quality module __init__.py.
 """
 
-import pytest
 from unittest import mock
 
 
@@ -47,7 +46,9 @@ class TestQualityModuleInit:
         from tidycode.modules.quality import run_quality_tools as direct_import
 
         # Test import from orchestrator
-        from tidycode.modules.quality.orchestrator import run_quality_tools as orchestrator_import
+        from tidycode.modules.quality.orchestrator import (
+            run_quality_tools as orchestrator_import,
+        )
 
         # Verify both imports are the same
         assert direct_import is orchestrator_import
@@ -60,8 +61,9 @@ class TestQualityModuleInit:
         Expected:
             Function has expected signature.
         """
-        from tidycode.modules.quality import run_quality_tools
         import inspect
+
+        from tidycode.modules.quality import run_quality_tools
 
         # Get function signature
         sig = inspect.signature(run_quality_tools)
@@ -138,10 +140,16 @@ class TestQualityModuleInit:
         from tidycode.modules.quality import run_quality_tools
 
         # Test that the function can be called (with mocked dependencies)
-        with mock.patch("tidycode.modules.quality.orchestrator.load_tidycode_config") as mock_config:
+        with mock.patch(
+            "tidycode.modules.quality.orchestrator.load_tidycode_config"
+        ) as mock_config:
             with mock.patch("tidycode.modules.quality.orchestrator.load_plugins_from"):
-                with mock.patch("tidycode.modules.quality.orchestrator.registry") as mock_registry:
-                    with mock.patch("tidycode.modules.quality.orchestrator.run_multiple_commands"):
+                with mock.patch(
+                    "tidycode.modules.quality.orchestrator.registry"
+                ) as mock_registry:
+                    with mock.patch(
+                        "tidycode.modules.quality.orchestrator.run_multiple_commands"
+                    ):
                         mock_config.return_value = {
                             "target": ".",
                             "check_only": False,
@@ -200,10 +208,16 @@ class TestQualityModuleInit:
         from tidycode.runner import SubprocessDisplayMode
 
         # Test that the function can accept enum values
-        with mock.patch("tidycode.modules.quality.orchestrator.load_tidycode_config") as mock_config:
+        with mock.patch(
+            "tidycode.modules.quality.orchestrator.load_tidycode_config"
+        ) as mock_config:
             with mock.patch("tidycode.modules.quality.orchestrator.load_plugins_from"):
-                with mock.patch("tidycode.modules.quality.orchestrator.registry") as mock_registry:
-                    with mock.patch("tidycode.modules.quality.orchestrator.run_multiple_commands"):
+                with mock.patch(
+                    "tidycode.modules.quality.orchestrator.registry"
+                ) as mock_registry:
+                    with mock.patch(
+                        "tidycode.modules.quality.orchestrator.run_multiple_commands"
+                    ):
                         mock_config.return_value = {
                             "target": ".",
                             "check_only": False,

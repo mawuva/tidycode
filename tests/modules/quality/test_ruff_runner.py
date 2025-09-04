@@ -2,9 +2,7 @@
 Tests for RuffRunner.
 """
 
-import pytest
 from pathlib import Path
-from unittest import mock
 
 from tidycode.modules.quality.ruff_runner import RuffRunner
 
@@ -38,9 +36,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_without_target(self):
@@ -52,9 +50,9 @@ class TestRuffRunner:
             Command includes ruff check command.
         """
         runner = RuffRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_with_check_only_true(self):
@@ -67,9 +65,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["ruff", "check"]
 
     def test_ruff_runner_build_command_with_check_only_false(self):
@@ -82,9 +80,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, False)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_with_check_only_none(self):
@@ -97,9 +95,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_with_args_and_kwargs(self):
@@ -112,16 +110,11 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(
-            target, 
-            True, 
-            "extra_arg1", 
-            "extra_arg2",
-            verbose=True,
-            debug=False
+            target, True, "extra_arg1", "extra_arg2", verbose=True, debug=False
         )
-        
+
         assert command == ["ruff", "check"]
 
     def test_ruff_runner_build_command_empty_target(self):
@@ -134,9 +127,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_unicode_target(self):
@@ -149,9 +142,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/à/fichier.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
 
     def test_ruff_runner_build_command_return_type(self):
@@ -164,9 +157,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/to/file.py")
-        
+
         command = runner.build_command(target, None)
-        
+
         assert isinstance(command, list)
         assert all(isinstance(item, str) for item in command)
 
@@ -179,9 +172,9 @@ class TestRuffRunner:
             Command returns ruff check command.
         """
         runner = RuffRunner()
-        
+
         command = runner.build_command(None, None)
-        
+
         assert command == ["ruff", "check", "--fix"]
         assert len(command) == 3
 
@@ -195,9 +188,9 @@ class TestRuffRunner:
         """
         runner = RuffRunner()
         target = Path("/path/测试/文件.py")
-        
+
         command = runner.build_command(target, True)
-        
+
         assert command == ["ruff", "check"]
 
     def test_ruff_runner_with_register_plugin(self):
@@ -209,7 +202,7 @@ class TestRuffRunner:
             RuffRunner is registered with correct metadata.
         """
         runner = RuffRunner()
-        
+
         # Verify the plugin is registered
         assert runner.meta.name == "ruff"
         assert runner.meta.description == "Ruff runner."
@@ -226,11 +219,11 @@ class TestRuffRunner:
         """
         runner1 = RuffRunner()
         runner2 = RuffRunner()
-        
+
         target = Path("/path/to/file.py")
         command1 = runner1.build_command(target, True)
         command2 = runner2.build_command(target, False)
-        
+
         assert command1 == ["ruff", "check"]
         assert command2 == ["ruff", "check", "--fix"]
         assert command1 != command2
@@ -244,11 +237,10 @@ class TestRuffRunner:
             RuffRunner is properly importable from different paths.
         """
         # Test direct import
-        from tidycode.modules.quality.ruff_runner import RuffRunner as DirectRuffRunner
-        
         # Test import from module
         from tidycode.modules.quality import ruff_runner
-        
+        from tidycode.modules.quality.ruff_runner import RuffRunner as DirectRuffRunner
+
         # Verify both imports work
         assert DirectRuffRunner is not None
         assert ruff_runner.RuffRunner is not None
