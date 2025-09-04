@@ -10,8 +10,9 @@ import typer
 
 from tidycode.utils.printing import pretty_print, print_error, print_success
 
+from .display import print_summary
 from .helpers import build_result, handle_exception
-from .types import SubprocessResult
+from .types import CommandSpec, SubprocessDisplayMode, SubprocessResult
 
 
 def run_command(
@@ -123,12 +124,63 @@ def run_command_live(
 
         if process.returncode == 0:
             print_success(
-                f"{display_name}: {result.status} (exit {process.returncode})"
+                f"{display_name}: (exit {process.returncode})", newline_before=True
             )
         else:
-            print_error(f"{display_name}: {result.status} (exit {process.returncode})")
+            print_error(
+                f"{display_name}: (exit {process.returncode})", newline_before=True
+            )
 
         return result
     except Exception as e:
-        print_error(f"Error running command: {' '.join(command)}", err=True)
+        print_error(
+            f"Error running command: {' '.join(command)}", err=True, newline_before=True
+        )
         return handle_exception(e, display_name, is_tool=is_tool, verbose=True)
+
+
+def run_multiple_commands(
+    commands: List[CommandSpec],
+    live: bool = False,
+    verbose: bool = False,
+    summary_display_mode: Optional[SubprocessDisplayMode] = None,
+) -> List[SubprocessResult] | None:
+    """
+    Run multiple commands sequentially.
+
+    Args:
+        commands: list of commands to run
+        live: run the commands live
+        verbose: display the outputs
+        summary_display_mode: display mode
+    Returns:
+        List of standardized results or None if summary_display_mode is provided
+    """
+    results: List[SubprocessResult] = []
+
+    for spec in commands:
+        cmd: List[str] = spec.command
+        tool_name: Optional[str] = spec.tool_name
+        cwd: Optional[Path] = spec.cwd
+        is_tool: bool = spec.is_tool
+
+        if live:
+            result = run_command_live(
+                command=cmd, display_name=tool_name, cwd=cwd, is_tool=is_tool
+            )
+        else:
+            result = run_command(
+                command=cmd,
+                display_name=tool_name,
+                cwd=cwd,
+                verbose=verbose,
+                is_tool=is_tool,
+            )
+
+        results.append(result)
+
+    if summary_display_mode:
+        print_summary(results, summary_display_mode)
+        return None
+
+    return results

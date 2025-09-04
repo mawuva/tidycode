@@ -39,7 +39,7 @@ tidy = "tidycode.cli.main:app"
 target = "."
 check-only = false
 verbose = false
-tools = ["black", "ruff", "isort", "mypy"]
+tools = ["black", "isort", "ruff", "mypy"]
 
 [tool.tidycode.clean]
 target = "."

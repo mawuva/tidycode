@@ -21,6 +21,6 @@ class ToolsSupported(BaseEnum):
     """Tools supported by TidyCode"""
 
     BLACK = "black"
-    RUFF = "ruff"
     ISORT = "isort"
+    RUFF = "ruff"
     MYPY = "mypy"

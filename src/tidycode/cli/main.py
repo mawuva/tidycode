@@ -4,7 +4,7 @@ TidyCode CLI main entry point.
 
 import typer
 
-from tidycode.cli.commands import pyproject, setup
+from tidycode.cli.commands import pyproject, quality, setup
 
 app = typer.Typer(
     help="{🧹} tidycode - A fun and simple CLI to keep your Python projects clean and secure (format, lint, test, doctor, etc.)",
@@ -12,6 +12,7 @@ app = typer.Typer(
 )
 
 app.add_typer(pyproject.app, name="pyproject")
+app.add_typer(quality.app, name="quality")
 
 setup.register_commands(app)
 
