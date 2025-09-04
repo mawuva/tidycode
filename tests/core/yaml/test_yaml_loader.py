@@ -9,7 +9,6 @@ import pytest
 
 from tidycode.core.yaml import load_yaml_file, save_yaml_file
 
-
 # ---------------------------
 # Unit tests
 # ---------------------------
@@ -171,16 +170,12 @@ def test_save_and_load_complex_nested_structure(tmp_path):
     data = {
         "users": [
             {"name": "Alice", "age": 30, "hobbies": ["reading", "swimming"]},
-            {"name": "Bob", "age": 25, "hobbies": ["gaming", "cooking"]}
+            {"name": "Bob", "age": 25, "hobbies": ["gaming", "cooking"]},
         ],
         "config": {
-            "database": {
-                "host": "localhost",
-                "port": 5432,
-                "ssl": True
-            },
-            "features": ["auth", "logging", "metrics"]
-        }
+            "database": {"host": "localhost", "port": 5432, "ssl": True},
+            "features": ["auth", "logging", "metrics"],
+        },
     }
 
     save_yaml_file(file_path, data)

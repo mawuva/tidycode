@@ -2,11 +2,13 @@
 Pre-commit manager.
 """
 
-from typing import Any, Dict, List, Union
 from pathlib import Path
-from tidycode.core.yaml import YamlFileManager
+from typing import Any, Dict, List, Union
+
 from tidycode.core.pre_commit import normalize_pre_commit_file
+from tidycode.core.yaml import YamlFileManager
 from tidycode.settings import PRE_COMMIT_FILE_PATH
+
 
 class PreCommitManager:
     """
@@ -14,8 +16,12 @@ class PreCommitManager:
     Uses YamlFileManager internally for all get/set/delete operations.
     Handles normalization, hook management, and persistence.
     """
-    
-    def __init__(self, file_path: Union[str, Path] = PRE_COMMIT_FILE_PATH, default_rev: str = "v1.0.0"):
+
+    def __init__(
+        self,
+        file_path: Union[str, Path] = PRE_COMMIT_FILE_PATH,
+        default_rev: str = "v1.0.0",
+    ):
         """
         Initialize the PreCommitManager.
         """
@@ -43,7 +49,7 @@ class PreCommitManager:
     def add_hook(self, repo: str, rev: str, hooks: List[Dict]) -> None:
         """
         Add one or multiple hooks to a repo, avoiding duplicates.
-        
+
         Args:
             repo (str): The repository to add the hooks to.
             rev (str): The revision of the repository to use.
@@ -65,7 +71,7 @@ class PreCommitManager:
     def remove_hook(self, hook_id: str):
         """
         Remove a hook by ID from all repos.
-        
+
         Args:
             hook_id (str): The ID of the hook to remove.
         """

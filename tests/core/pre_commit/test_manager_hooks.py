@@ -2,8 +2,8 @@
 TidyCode Pre-commit Manager Hooks Management Tests
 """
 
-from tidycode.core.yaml import save_yaml_file
 from tidycode.core.pre_commit.manager import PreCommitManager
+from tidycode.core.yaml import save_yaml_file
 
 
 def test_list_hooks_empty_repos(tmp_path):
@@ -31,25 +31,26 @@ def test_list_hooks_with_hooks(tmp_path):
         Returns list of all hook IDs.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0",
-                "hooks": [
-                    {"id": "trailing-whitespace"},
-                    {"id": "end-of-file-fixer"}
-                ]
-            },
-            {
-                "repo": "https://github.com/psf/black",
-                "rev": "v22.0.0",
-                "hooks": [
-                    {"id": "black"}
-                ]
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                    "hooks": [
+                        {"id": "trailing-whitespace"},
+                        {"id": "end-of-file-fixer"},
+                    ],
+                },
+                {
+                    "repo": "https://github.com/psf/black",
+                    "rev": "v22.0.0",
+                    "hooks": [{"id": "black"}],
+                },
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     hooks = manager.list_hooks()
@@ -103,19 +104,24 @@ def test_add_hook_existing_repo(tmp_path):
         Hooks are added to the existing repository entry.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0",
-                "hooks": [{"id": "trailing-whitespace"}]
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                    "hooks": [{"id": "trailing-whitespace"}],
+                }
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     new_hooks = [{"id": "end-of-file-fixer"}]
-    manager.add_hook("https://github.com/pre-commit/pre-commit-hooks", "v4.4.0", new_hooks)
+    manager.add_hook(
+        "https://github.com/pre-commit/pre-commit-hooks", "v4.4.0", new_hooks
+    )
 
     repos = manager.yaml_file_manager.get_key("repos")
     assert len(repos) == 1
@@ -133,19 +139,24 @@ def test_add_hook_duplicate_prevention(tmp_path):
         Duplicate hooks are not added.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0",
-                "hooks": [{"id": "trailing-whitespace"}]
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                    "hooks": [{"id": "trailing-whitespace"}],
+                }
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     duplicate_hooks = [{"id": "trailing-whitespace"}]
-    manager.add_hook("https://github.com/pre-commit/pre-commit-hooks", "v4.4.0", duplicate_hooks)
+    manager.add_hook(
+        "https://github.com/pre-commit/pre-commit-hooks", "v4.4.0", duplicate_hooks
+    )
 
     repos = manager.yaml_file_manager.get_key("repos")
     assert len(repos) == 1
@@ -162,14 +173,17 @@ def test_add_hook_existing_repo_no_hooks(tmp_path):
         Hooks key is created and hooks are added.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0"
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                }
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     hooks = [{"id": "trailing-whitespace"}]
@@ -190,26 +204,26 @@ def test_remove_hook_existing(tmp_path):
         Hook is removed from all repositories.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0",
-                "hooks": [
-                    {"id": "trailing-whitespace"},
-                    {"id": "end-of-file-fixer"}
-                ]
-            },
-            {
-                "repo": "https://github.com/psf/black",
-                "rev": "v22.0.0",
-                "hooks": [
-                    {"id": "black"},
-                    {"id": "trailing-whitespace"}
-                ]
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                    "hooks": [
+                        {"id": "trailing-whitespace"},
+                        {"id": "end-of-file-fixer"},
+                    ],
+                },
+                {
+                    "repo": "https://github.com/psf/black",
+                    "rev": "v22.0.0",
+                    "hooks": [{"id": "black"}, {"id": "trailing-whitespace"}],
+                },
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     manager.remove_hook("trailing-whitespace")
@@ -235,7 +249,7 @@ def test_remove_hook_nonexistent(tmp_path):
             {
                 "repo": "https://github.com/pre-commit/pre-commit-hooks",
                 "rev": "v4.4.0",
-                "hooks": [{"id": "trailing-whitespace"}]
+                "hooks": [{"id": "trailing-whitespace"}],
             }
         ]
     }
@@ -277,14 +291,17 @@ def test_remove_hook_repo_without_hooks_key(tmp_path):
         No changes are made, but hooks key is added during normalization.
     """
     file_path = tmp_path / "test.yaml"
-    save_yaml_file(file_path, {
-        "repos": [
-            {
-                "repo": "https://github.com/pre-commit/pre-commit-hooks",
-                "rev": "v4.4.0"
-            }
-        ]
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "repos": [
+                {
+                    "repo": "https://github.com/pre-commit/pre-commit-hooks",
+                    "rev": "v4.4.0",
+                }
+            ]
+        },
+    )
 
     manager = PreCommitManager(file_path)
     manager.remove_hook("any-hook")
@@ -311,7 +328,7 @@ def test_add_multiple_hooks_at_once(tmp_path):
     hooks = [
         {"id": "trailing-whitespace"},
         {"id": "end-of-file-fixer"},
-        {"id": "check-yaml"}
+        {"id": "check-yaml"},
     ]
     manager.add_hook("https://github.com/pre-commit/pre-commit-hooks", "v4.4.0", hooks)
 

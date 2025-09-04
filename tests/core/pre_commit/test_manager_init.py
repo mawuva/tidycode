@@ -2,7 +2,6 @@
 TidyCode Pre-commit Manager Initialization Tests
 """
 
-from pathlib import Path
 from unittest import mock
 
 import pytest
@@ -34,7 +33,8 @@ def test_pre_commit_manager_init_generic_exception(tmp_path):
     file_path.write_text("repos: []")
 
     with mock.patch(
-        "tidycode.core.pre_commit.manager.normalize_pre_commit_file", side_effect=Exception("Boom")
+        "tidycode.core.pre_commit.manager.normalize_pre_commit_file",
+        side_effect=Exception("Boom"),
     ):
         with pytest.raises(Exception) as exc_info:
             PreCommitManager(file_path)
@@ -84,16 +84,19 @@ def test_pre_commit_manager_init_normalizes_file(tmp_path):
         File is normalized during initialization.
     """
     file_path = tmp_path / "test.yaml"
-    file_path.write_text("""
+    file_path.write_text(
+        """
 repos:
   - https://github.com/pre-commit/pre-commit-hooks
-""")
+"""
+    )
 
-    manager = PreCommitManager(file_path, default_rev="v3.0.0")
+    PreCommitManager(file_path, default_rev="v3.0.0")
 
     # Verify the file was normalized
     import yaml
-    with open(file_path, 'r') as f:
+
+    with open(file_path, "r") as f:
         data = yaml.safe_load(f)
 
     assert len(data["repos"]) == 1

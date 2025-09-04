@@ -4,8 +4,11 @@ YAML file manager.
 
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
+
 from tidycode.utils import split_dot_key
+
 from .loader import load_yaml_file, save_yaml_file
+
 
 class YamlFileManager:
     """
@@ -13,6 +16,7 @@ class YamlFileManager:
     Provides methods to get/set/delete keys or sections,
     with support for dot notation or path/key_name.
     """
+
     def __init__(self, path: Union[str, Path]) -> None:
         """
         Initialize the YAML file manager.
@@ -31,7 +35,7 @@ class YamlFileManager:
     ) -> Tuple[List[str], str]:
         """
         Normalize input: either dot_key or (path + key_name).
-        
+
         Args:
             dot_key (Optional[str]): The dot-separated key.
             path (Optional[List[str]]): The path to the key.
@@ -54,7 +58,7 @@ class YamlFileManager:
     ) -> Optional[Union[Dict[str, Any], List[Any]]]:
         """
         Descend into the YAML structure, optionally creating intermediate dicts.
-        
+
         Args:
             path (List[str]): The path to the key.
             create (bool): Whether to create intermediate dicts if they don't exist.
@@ -113,7 +117,7 @@ class YamlFileManager:
 
         # Return the final node reached
         return current
-    
+
     def _resolve_and_navigate(
         self,
         dot_key: Optional[str] = None,
@@ -123,7 +127,7 @@ class YamlFileManager:
     ) -> Optional[Tuple[Union[Dict[str, Any], List[Any]], str]]:
         """
         Resolve input and navigate to the parent node.
-        
+
         Args:
             dot_key (Optional[str]): The dot-separated key.
             path (Optional[List[str]]): The path to the key.
@@ -138,7 +142,7 @@ class YamlFileManager:
         if parent is None:
             return None
         return parent, key_name
-    
+
     # -----------------------
     # Key-level operations
     # -----------------------
@@ -234,13 +238,13 @@ class YamlFileManager:
             except ValueError:
                 return False
         return False
-    
+
     # -----------------------
     # Persistence
     # -----------------------
     def save(self) -> None:
         """Save changes back to the YAML file.
-        
+
         Raises:
             PermissionError: If the file cannot be written due to permissions.
             Exception: If there is an error during writing.

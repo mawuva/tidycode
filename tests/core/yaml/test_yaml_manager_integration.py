@@ -84,12 +84,13 @@ def test_list_operations(tmp_path):
         List operations work correctly.
     """
     file_path = tmp_path / "lists.yaml"
-    save_yaml_file(file_path, {
-        "items": ["item1", "item2", "item3"],
-        "nested": {
-            "list": [{"name": "obj1"}, {"name": "obj2"}]
-        }
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "items": ["item1", "item2", "item3"],
+            "nested": {"list": [{"name": "obj1"}, {"name": "obj2"}]},
+        },
+    )
 
     manager = YamlFileManager(file_path)
 
@@ -122,15 +123,18 @@ def test_mixed_data_types(tmp_path):
         All data types are handled correctly.
     """
     file_path = tmp_path / "mixed.yaml"
-    save_yaml_file(file_path, {
-        "string": "hello",
-        "number": 42,
-        "float": 3.14,
-        "boolean": True,
-        "null_value": None,
-        "list": [1, 2, 3],
-        "dict": {"nested": "value"}
-    })
+    save_yaml_file(
+        file_path,
+        {
+            "string": "hello",
+            "number": 42,
+            "float": 3.14,
+            "boolean": True,
+            "null_value": None,
+            "list": [1, 2, 3],
+            "dict": {"nested": "value"},
+        },
+    )
 
     manager = YamlFileManager(file_path)
 
@@ -178,9 +182,10 @@ def test_save_and_reload_persistence(tmp_path):
 
     # Verify file content
     import yaml
-    with open(file_path, 'r') as f:
+
+    with open(file_path, "r") as f:
         content = yaml.safe_load(f)
-    
+
     assert content["initial"] == "value"
     assert content["new_key"] == "new_value"
     assert content["nested"]["key"] == "nested_value"

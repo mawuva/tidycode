@@ -75,11 +75,7 @@ def test_yaml_file_manager_navigate_existing_path():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "section": {
-            "subsection": {"key": "value"}
-        }
-    }
+    manager.document = {"section": {"subsection": {"key": "value"}}}
 
     result = manager._navigate(["section", "subsection"])
     assert result is not None
@@ -135,12 +131,7 @@ def test_yaml_file_manager_navigate_list_with_index():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "items": [
-            {"name": "item1"},
-            {"name": "item2"}
-        ]
-    }
+    manager.document = {"items": [{"name": "item1"}, {"name": "item2"}]}
 
     result = manager._navigate(["items", "0"])
     assert result is not None
@@ -159,9 +150,7 @@ def test_yaml_file_manager_navigate_list_invalid_index():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "items": [{"name": "item1"}]
-    }
+    manager.document = {"items": [{"name": "item1"}]}
 
     result = manager._navigate(["items", "invalid"])
     assert result is None
@@ -178,9 +167,7 @@ def test_yaml_file_manager_navigate_list_out_of_bounds():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "items": [{"name": "item1"}]
-    }
+    manager.document = {"items": [{"name": "item1"}]}
 
     result = manager._navigate(["items", "5"])
     assert result is None
@@ -197,9 +184,7 @@ def test_yaml_file_manager_navigate_list_out_of_bounds_create():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "items": [{"name": "item1"}]
-    }
+    manager.document = {"items": [{"name": "item1"}]}
 
     result = manager._navigate(["items", "2"], create=True)
     assert result is not None
@@ -218,9 +203,7 @@ def test_yaml_file_manager_navigate_scalar_value():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "scalar": "value"
-    }
+    manager.document = {"scalar": "value"}
 
     result = manager._navigate(["scalar", "subkey"])
     assert result is None
@@ -237,11 +220,7 @@ def test_yaml_file_manager_resolve_and_navigate():
     file_path = Path("dummy.yaml")
     manager = YamlFileManager.__new__(YamlFileManager)
     manager.path = file_path
-    manager.document = {
-        "section": {
-            "subsection": {"key": "value"}
-        }
-    }
+    manager.document = {"section": {"subsection": {"key": "value"}}}
 
     result = manager._resolve_and_navigate("section.subsection.key")
     assert result is not None
