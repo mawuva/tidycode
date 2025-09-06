@@ -188,13 +188,13 @@ def test_command_spec_creation():
 
     spec = CommandSpec(
         command=command,
-        tool_name=tool_name,
+        display_name=tool_name,
         cwd=cwd,
         is_tool=is_tool,
     )
 
     assert spec.command == command
-    assert spec.tool_name == tool_name
+    assert spec.display_name == tool_name
     assert spec.cwd == cwd
     assert spec.is_tool == is_tool
 
@@ -211,13 +211,13 @@ def test_command_spec_with_none_values():
 
     spec = CommandSpec(
         command=command,
-        tool_name=None,
+        display_name=None,
         cwd=None,
         is_tool=False,
     )
 
     assert spec.command == command
-    assert spec.tool_name is None
+    assert spec.display_name is None
     assert spec.cwd is None
     assert spec.is_tool is False
 
@@ -235,13 +235,13 @@ def test_command_spec_with_path_cwd():
 
     spec = CommandSpec(
         command=command,
-        tool_name="ls",
+        display_name="ls",
         cwd=cwd,
         is_tool=True,
     )
 
     assert spec.command == command
-    assert spec.tool_name == "ls"
+    assert spec.display_name == "ls"
     assert spec.cwd == cwd
     assert isinstance(spec.cwd, Path)
     assert spec.is_tool is True
@@ -260,13 +260,13 @@ def test_command_spec_with_string_cwd():
 
     spec = CommandSpec(
         command=command,
-        tool_name="ls",
+        display_name="ls",
         cwd=cwd,
         is_tool=True,
     )
 
     assert spec.command == command
-    assert spec.tool_name == "ls"
+    assert spec.display_name == "ls"
     assert spec.cwd == cwd
     assert spec.is_tool is True
 
@@ -283,13 +283,13 @@ def test_command_spec_with_empty_command():
 
     spec = CommandSpec(
         command=command,
-        tool_name="empty",
+        display_name="empty",
         cwd=None,
         is_tool=False,
     )
 
     assert spec.command == command
-    assert spec.tool_name == "empty"
+    assert spec.display_name == "empty"
     assert spec.cwd is None
     assert spec.is_tool is False
 
@@ -306,13 +306,13 @@ def test_command_spec_with_complex_command():
 
     spec = CommandSpec(
         command=command,
-        tool_name="pytest",
+        display_name="pytest",
         cwd=None,
         is_tool=True,
     )
 
     assert spec.command == command
-    assert spec.tool_name == "pytest"
+    assert spec.display_name == "pytest"
     assert spec.cwd is None
     assert spec.is_tool is True
 
@@ -359,20 +359,20 @@ def test_command_spec_immutability():
     """
     spec = CommandSpec(
         command=["echo", "hello"],
-        tool_name="echo",
+        display_name="echo",
         cwd=None,
         is_tool=True,
     )
 
     # Fields should be readable
     assert spec.command == ["echo", "hello"]
-    assert spec.tool_name == "echo"
+    assert spec.display_name == "echo"
     assert spec.cwd is None
     assert spec.is_tool is True
 
     # Fields should be mutable (dataclass without frozen=True)
-    spec.tool_name = "modified"
-    assert spec.tool_name == "modified"
+    spec.display_name = "modified"
+    assert spec.display_name == "modified"
 
 
 def test_subprocess_display_mode_comparison():
@@ -473,13 +473,13 @@ def test_command_spec_with_unicode():
 
     spec = CommandSpec(
         command=command,
-        tool_name="echo_unicode",
+        display_name="echo_unicode",
         cwd=None,
         is_tool=True,
     )
 
     assert spec.command == command
-    assert spec.tool_name == "echo_unicode"
+    assert spec.display_name == "echo_unicode"
     assert spec.command[1] == "café"
     assert spec.command[2] == "ñöç"
     assert spec.command[3] == "中文"

@@ -34,24 +34,7 @@ class TestQualityModuleInit:
         expected_exports = ["run_quality_tools"]
         assert __all__ == expected_exports
 
-    def test_quality_module_import_consistency(self):
-        """
-        Scenario:
-            Test import consistency from different paths.
-
-        Expected:
-            Imports work consistently from different paths.
-        """
-        # Test direct import
-        from tidycode.modules.quality import run_quality_tools as direct_import
-
-        # Test import from orchestrator
-        from tidycode.modules.quality.orchestrator import (
-            run_quality_tools as orchestrator_import,
-        )
-
-        # Verify both imports are the same
-        assert direct_import is orchestrator_import
+    
 
     def test_quality_module_function_signatures(self):
         """
@@ -141,21 +124,21 @@ class TestQualityModuleInit:
 
         # Test that the function can be called (with mocked dependencies)
         with mock.patch(
-            "tidycode.modules.quality.orchestrator.load_tidycode_config"
+            "tidycode.core.pyproject.utils.helpers.load_tidycode_config"
         ) as mock_config:
-            with mock.patch("tidycode.modules.quality.orchestrator.load_plugins_from"):
+            with mock.patch("tidycode.plugins.load_plugins_from"):
                 with mock.patch(
-                    "tidycode.modules.quality.orchestrator.registry"
+                    "tidycode.plugins.registry.registry"
                 ) as mock_registry:
                     with mock.patch(
-                        "tidycode.modules.quality.orchestrator.run_multiple_commands"
+                        "tidycode.runner.subprocess.run_multiple_commands"
                     ):
                         mock_config.return_value = {
                             "target": ".",
                             "check_only": False,
                             "tools": [],
                         }
-                        mock_registry.by_category.return_value = []
+                        mock_registry.filter.return_value = []
 
                         # This should not raise an exception
                         run_quality_tools()
@@ -209,21 +192,21 @@ class TestQualityModuleInit:
 
         # Test that the function can accept enum values
         with mock.patch(
-            "tidycode.modules.quality.orchestrator.load_tidycode_config"
+            "tidycode.core.pyproject.utils.helpers.load_tidycode_config"
         ) as mock_config:
-            with mock.patch("tidycode.modules.quality.orchestrator.load_plugins_from"):
+            with mock.patch("tidycode.plugins.load_plugins_from"):
                 with mock.patch(
-                    "tidycode.modules.quality.orchestrator.registry"
+                    "tidycode.plugins.registry.registry"
                 ) as mock_registry:
                     with mock.patch(
-                        "tidycode.modules.quality.orchestrator.run_multiple_commands"
+                        "tidycode.runner.subprocess.run_multiple_commands"
                     ):
                         mock_config.return_value = {
                             "target": ".",
                             "check_only": False,
                             "tools": [],
                         }
-                        mock_registry.by_category.return_value = []
+                        mock_registry.filter.return_value = []
 
                         # This should not raise an exception
                         run_quality_tools(

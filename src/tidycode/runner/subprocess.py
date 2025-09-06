@@ -81,7 +81,7 @@ def run_plugins(
     configs: dict = load_tidycode_config()
     commands_to_run: List[CommandSpec] = []
 
-    target: Path = path or configs.get("target", ".")
+    target: Path = Path(path or configs.get("target", "."))
     config_check_only: bool = configs.get("check_only", check_only)
     tools = configs.get("tools", []) if tools is None else tools
 

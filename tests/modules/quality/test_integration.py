@@ -8,7 +8,6 @@ from unittest import mock
 from tidycode.modules.quality.black_runner import BlackRunner
 from tidycode.modules.quality.isort_runner import IsortRunner
 from tidycode.modules.quality.mypy_runner import MypyRunner
-from tidycode.modules.quality.orchestrator import run_quality_tools
 from tidycode.modules.quality.ruff_runner import RuffRunner
 
 
@@ -190,54 +189,6 @@ class TestQualityModuleIntegration:
 
             # Commands should be the same (extras are ignored)
             assert command_with_extras == command_simple
-
-    @mock.patch("tidycode.modules.quality.orchestrator.run_multiple_commands")
-    @mock.patch("tidycode.modules.quality.orchestrator.registry")
-    @mock.patch("tidycode.modules.quality.orchestrator.load_plugins_from")
-    @mock.patch("tidycode.modules.quality.orchestrator.load_tidycode_config")
-    def test_orchestrator_with_all_runners(
-        self,
-        mock_load_config,
-        mock_load_plugins,
-        mock_registry,
-        mock_run_commands,
-    ):
-        """
-        Scenario:
-            Test orchestrator with all quality runners.
-
-        Expected:
-            Orchestrator correctly handles all runners.
-        """
-        # Setup mocks
-        mock_config = {
-            "target": Path("/project"),
-            "check_only": False,
-            "tools": ["black", "isort", "mypy", "ruff"],
-        }
-        mock_load_config.return_value = mock_config
-
-        # Mock plugin registry with all runners
-        mock_plugins = []
-        for tool_name in ["black", "isort", "mypy", "ruff"]:
-            mock_plugin = mock.MagicMock()
-            mock_plugin.meta.name = tool_name
-            mock_plugin.build_command.return_value = [tool_name]
-            mock_plugin.is_tool.return_value = True
-            mock_plugins.append(mock_plugin)
-
-        mock_registry.by_category.return_value = mock_plugins
-
-        # Call orchestrator
-        run_quality_tools()
-
-        # Verify all runners were processed
-        call_args = mock_run_commands.call_args
-        commands = call_args[1]["commands"]
-        assert len(commands) == 4
-
-        tool_names = [cmd.tool_name for cmd in commands]
-        assert set(tool_names) == {"black", "isort", "mypy", "ruff"}
 
     def test_runners_plugin_registration(self):
         """

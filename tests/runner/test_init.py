@@ -6,9 +6,10 @@ from tidycode.runner import (
     CommandSpec,
     SubprocessDisplayMode,
     SubprocessResult,
-    print_summary,
-    run_multiple_commands,
+    print_summary
 )
+
+from tidycode.runner.subprocess import run_multiple_commands, run_plugins
 
 
 def test_runner_module_imports():
@@ -21,6 +22,7 @@ def test_runner_module_imports():
     """
     # Test that functions are callable
     assert callable(run_multiple_commands)
+    assert callable(run_plugins)
     assert callable(print_summary)
 
     # Test that classes are available
@@ -50,11 +52,12 @@ def test_runner_module_all_exports():
     from tidycode.runner import __all__
 
     expected_exports = [
-        "run_multiple_commands",
         "CommandSpec",
         "SubprocessResult",
         "SubprocessDisplayMode",
         "print_summary",
+        "run_command",
+        "run_command_live",
     ]
 
     for export in expected_exports:
@@ -78,10 +81,11 @@ def test_runner_module_import_consistency():
         SubprocessDisplayMode,
         SubprocessResult,
         print_summary,
-        run_multiple_commands,
     )
+    from tidycode.runner.subprocess import run_multiple_commands, run_plugins
 
     assert run_multiple_commands is not None
+    assert run_plugins is not None
     assert CommandSpec is not None
     assert SubprocessResult is not None
     assert SubprocessDisplayMode is not None
@@ -91,6 +95,7 @@ def test_runner_module_import_consistency():
     from tidycode.runner.display import print_summary as display_print_summary
     from tidycode.runner.subprocess import (
         run_multiple_commands as subprocess_run_multiple_commands,
+        run_plugins as subprocess_run_plugins,
     )
     from tidycode.runner.types import CommandSpec as types_CommandSpec
     from tidycode.runner.types import (
@@ -99,6 +104,7 @@ def test_runner_module_import_consistency():
     from tidycode.runner.types import SubprocessResult as types_SubprocessResult
 
     assert run_multiple_commands is subprocess_run_multiple_commands
+    assert run_plugins is subprocess_run_plugins
     assert CommandSpec is types_CommandSpec
     assert SubprocessResult is types_SubprocessResult
     assert SubprocessDisplayMode is types_SubprocessDisplayMode
@@ -152,7 +158,7 @@ def test_runner_module_class_attributes():
 
     # Test CommandSpec attributes
     spec = CommandSpec(["echo"], "echo", None, True)
-    expected_attrs = ["command", "tool_name", "cwd", "is_tool"]
+    expected_attrs = ["command", "display_name", "cwd", "is_tool"]
     for attr in expected_attrs:
         assert hasattr(spec, attr)
 
