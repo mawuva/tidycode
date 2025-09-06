@@ -197,13 +197,13 @@ def test_run_multiple_commands_success():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo1",
+            display_name="echo1",
             cwd=None,
             is_tool=True,
         ),
         CommandSpec(
             command=["echo", "world"],
-            tool_name="echo2",
+            display_name="echo2",
             cwd=None,
             is_tool=True,
         ),
@@ -233,13 +233,13 @@ def test_run_multiple_commands_mixed_results():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=True,
         ),
         CommandSpec(
             command=["false"],
-            tool_name="false",
+            display_name="false",
             cwd=None,
             is_tool=True,
         ),
@@ -266,7 +266,7 @@ def test_run_multiple_commands_live_mode():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=True,
         ),
@@ -302,13 +302,13 @@ def test_run_multiple_commands_with_cwd(tmp_path):
     commands = [
         CommandSpec(
             command=["ls", "file1.txt"],
-            tool_name="ls1",
+            display_name="ls1",
             cwd=tmp_path,
             is_tool=True,
         ),
         CommandSpec(
             command=["ls", "file2.txt"],
-            tool_name="ls2",
+            display_name="ls2",
             cwd=tmp_path,
             is_tool=True,
         ),
@@ -353,7 +353,7 @@ def test_run_multiple_commands_different_display_modes():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=True,
         ),
@@ -388,7 +388,7 @@ def test_run_multiple_commands_verbose():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=True,
         ),
@@ -421,13 +421,13 @@ def test_run_multiple_commands_with_tool_and_non_tool():
     commands = [
         CommandSpec(
             command=["echo", "hello"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=True,
         ),
         CommandSpec(
             command=["echo", "world"],
-            tool_name="echo",
+            display_name="echo",
             cwd=None,
             is_tool=False,
         ),

@@ -6,9 +6,9 @@ from typing import List, Optional
 
 import typer
 
-from tidycode.modules.quality import run_quality_tools
+from tidycode.runner.subprocess import run_plugins
 from tidycode.runner.types import SubprocessDisplayMode
-from tidycode.utils.printing import pretty_print
+from tidycode.utils.printing import pretty_header
 
 app = typer.Typer(
     help="Run formatting, linting, and type checking tools (black, isort, ruff, mypy)",
@@ -32,14 +32,88 @@ def check_quality(
     ),
 ) -> None:
     """
-    Run formatting, linting, and type checking tools (black, isort, ruff, mypy)
+    Run formatting, linting, and type checking tools (black, isort, ruff, mypy) with automatic summary
     """
     tool_list: Optional[List[str]] = tools.split(",") if tools else None
 
-    pretty_print("🔍 Running selected tools...", fg=typer.colors.CYAN)
+    pretty_header("quality", "Running quality checks...", style="banner", err=True)
 
-    # Execute the tools with automatic summary
-    run_quality_tools(
+    run_plugins(
+        category="quality",
+        tools=tool_list,
+        check_only=check_only,
+        live=live,
+        verbose=verbose,
+        summary_display_mode=summary_mode,
+    )
+
+
+@app.command(name="style", help="Perform code style checking")
+def style_quality(
+    tools: Optional[str] = typer.Option(
+        None, help="Comma-separated list of tools to run"
+    ),
+    check_only: bool = typer.Option(
+        False, "--check-only", "-c", help="Run tools in check-only mode"
+    ),
+    live: bool = typer.Option(True, "--live", "-l", help="Stream outputs live"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Show detailed output"),
+    summary_mode: Optional[SubprocessDisplayMode] = typer.Option(
+        SubprocessDisplayMode.TABLE_MINIMAL,
+        help="Summary display mode (TABLE_FULL, TABLE_MINIMAL, TEXT, LIST)",
+    ),
+) -> None:
+    """
+    Run style checking tools (black, isort, ruff) with automatic summary
+    """
+
+    tool_list: Optional[List[str]] = (
+        tools.split(",") if tools else ["black", "isort", "ruff"]
+    )
+
+    pretty_header(
+        scope="style", message="Running style checks...", style="banner", err=True
+    )
+
+    run_plugins(
+        category="quality",
+        scope="style",
+        tools=tool_list,
+        check_only=check_only,
+        live=live,
+        verbose=verbose,
+        summary_display_mode=summary_mode,
+    )
+
+
+@app.command(name="type", help="Perform type checking")
+def run_type_checking(
+    tools: Optional[str] = typer.Option(
+        None, help="Comma-separated list of tools to run"
+    ),
+    check_only: bool = typer.Option(
+        False, "--check-only", "-c", help="Run tools in check-only mode"
+    ),
+    live: bool = typer.Option(True, "--live", "-l", help="Stream outputs live"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Show detailed output"),
+    summary_mode: Optional[SubprocessDisplayMode] = typer.Option(
+        SubprocessDisplayMode.TABLE_MINIMAL,
+        help="Summary display mode (TABLE_FULL, TABLE_MINIMAL, TEXT, LIST)",
+    ),
+) -> None:
+    """
+    Run type checking tools (mypy) with automatic summary
+    """
+
+    tool_list: Optional[List[str]] = tools.split(",") if tools else ["mypy"]
+
+    pretty_header(
+        scope="type", message="Running type checking...", style="banner", err=True
+    )
+
+    run_plugins(
+        category="quality",
+        scope="type",
         tools=tool_list,
         check_only=check_only,
         live=live,

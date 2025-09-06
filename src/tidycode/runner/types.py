@@ -38,6 +38,6 @@ class CommandSpec:
     """Command specification"""
 
     command: List[str]
-    tool_name: Optional[str]
+    display_name: Optional[str]
     cwd: Optional[Path]
     is_tool: bool

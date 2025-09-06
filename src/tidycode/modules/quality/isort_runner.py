@@ -10,6 +10,7 @@ from tidycode.plugins.runner import BaseRunner
     description="Isort runner.",
     type="runner",
     category="quality",
+    scope="style",
 )
 class IsortRunner(BaseRunner):
     """

@@ -2,7 +2,18 @@
 TidyCode Printing Utilities
 """
 
+import shutil
+
+import pyfiglet
 import typer
+
+SCOPE_STYLES = {
+    "style": {"icon": "✨", "color": typer.colors.CYAN},
+    "type": {"icon": "🧩", "color": typer.colors.MAGENTA},
+    "security": {"icon": "🛡", "color": typer.colors.RED},
+    "complexity": {"icon": "📊", "color": typer.colors.YELLOW},
+    "default": {"icon": "🔍", "color": typer.colors.GREEN},
+}
 
 
 def pretty_print(
@@ -17,7 +28,7 @@ def pretty_print(
     err: bool = False,
 ):
     """
-    Wrapper autour de typer.secho avec gestion des couleurs, préfixes et espaces.
+    Wrapper around typer.secho with color, prefix and space management.
     """
     text = message.strip()
 
@@ -36,7 +47,7 @@ def pretty_print(
 
 
 # ----------------------------
-# Helpers spécialisés
+# Helpers specialized
 # ----------------------------
 
 
@@ -63,3 +74,46 @@ def print_title(message: str, **kwargs):
         bold=True,
         **kwargs,
     )
+
+
+def pretty_header(
+    scope: str,
+    message: str,
+    style: str = "box",
+    font: str = "slant",
+    err: bool = False,
+) -> None:
+    """
+    Pretty print a header for CLI with two styles:
+    - box: Full screen box
+    - figlet: ASCII art with pyfiglet
+    """
+    terminal_width = shutil.get_terminal_size((80, 20)).columns
+    meta = SCOPE_STYLES.get(scope, SCOPE_STYLES["default"])
+    icon, color = meta["icon"], meta["color"]
+
+    text = f"{icon} {message} {icon}"
+
+    if style == "box":
+        border = "─" * (terminal_width - 2)
+        typer.secho("╭" + border + "╮", fg=color, bold=True, err=err)
+        typer.secho(text.center(terminal_width), fg=color, bold=True, err=err)
+        typer.secho("╰" + border + "╯", fg=color, bold=True, err=err)
+
+    elif style == "banner":
+        padding = (terminal_width - len(text)) // 2
+        line = f"{'═' * padding}{text}{'═' * (terminal_width - len(text) - padding)}"
+        typer.secho(line, fg=color, bold=True, err=err)
+
+    elif style == "alert":
+        line = "!" * terminal_width
+        typer.secho(line, fg=color, bold=True, err=err)
+        typer.secho(text.center(terminal_width), fg=color, bold=True, err=err)
+        typer.secho(line, fg=color, bold=True, err=err)
+
+    elif style == "figlet":
+        ascii_art = pyfiglet.figlet_format(message, width=terminal_width)
+        typer.secho(ascii_art, fg=color, bold=True, err=err)
+
+    else:  # fallback
+        typer.secho(text, fg=color, bold=True, err=err)

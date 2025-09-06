@@ -14,6 +14,7 @@ from tidycode.plugins.runner import BaseRunner
     description="Mypy runner.",
     type="runner",
     category="quality",
+    scope="type",
 )
 class MypyRunner(BaseRunner):
     """

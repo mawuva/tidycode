@@ -31,12 +31,29 @@ class PluginRegistry:
     def by_type(self, type: str) -> List[BasePlugin]:
         return [p for p in self._plugins.values() if p.meta.type == type]
 
+    def by_scope(self, scope: str) -> List[BasePlugin]:
+        return [p for p in self._plugins.values() if p.meta.scope == scope]
+
+    def filter(self, **criteria: str) -> List[BasePlugin]:
+        """
+        Filter plugins by the given criteria.
+        """
+        return [
+            p
+            for p in self._plugins.values()
+            if all(getattr(p.meta, key) == value for key, value in criteria.items())
+        ]
+
 
 registry = PluginRegistry()
 
 
 def register_plugin(
-    name: str, description: str = "", type: str = "generic", category: str = "default"
+    name: str,
+    description: str = "",
+    type: str = "generic",
+    category: str = "default",
+    scope: str = "default",
 ) -> Callable[[Type[BasePlugin]], Type[BasePlugin]]:
     """
     Decorator to register a plugin.
@@ -44,7 +61,11 @@ def register_plugin(
 
     def decorator(cls: Type[BasePlugin]):
         cls.meta = PluginMeta(
-            name=name, description=description, type=type, category=category
+            name=name,
+            description=description,
+            type=type,
+            category=category,
+            scope=scope,
         )
         instance = cls()
         registry.register(instance)

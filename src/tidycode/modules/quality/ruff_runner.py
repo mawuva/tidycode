@@ -14,6 +14,7 @@ from tidycode.plugins.runner import BaseRunner
     description="Ruff runner.",
     type="runner",
     category="quality",
+    scope="style",
 )
 class RuffRunner(BaseRunner):
     """
