@@ -5,8 +5,6 @@ TidyCode Runner Executor Tests
 from pathlib import Path
 from unittest import mock
 
-import pytest
-
 from tidycode.runner.executor import run_command, run_command_live
 from tidycode.runner.types import SubprocessResult
 
@@ -61,9 +59,7 @@ def test_run_command_with_cwd():
         mock_process.stderr = ""
         mock_run.return_value = mock_process
 
-        result = run_command(
-            ["pwd"], display_name="test", cwd=Path("/tmp"), verbose=False
-        )
+        run_command(["pwd"], display_name="test", cwd=Path("/tmp"), verbose=False)
 
         mock_run.assert_called_once()
         call_args = mock_run.call_args
@@ -78,9 +74,10 @@ def test_run_command_verbose():
     Expected:
         Command runs with verbose logging.
     """
-    with mock.patch("subprocess.run") as mock_run, mock.patch(
-        "tidycode.runner.executor.pretty_print"
-    ) as mock_print:
+    with (
+        mock.patch("subprocess.run") as mock_run,
+        mock.patch("tidycode.runner.executor.pretty_print") as mock_print,
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = "output"
@@ -102,11 +99,11 @@ def test_run_command_live_success():
     Expected:
         Returns SubprocessResult with success status.
     """
-    with mock.patch("subprocess.Popen") as mock_popen, mock.patch(
-        "typer.echo"
-    ) as mock_echo, mock.patch(
-        "tidycode.runner.executor.print_success"
-    ) as mock_success:
+    with (
+        mock.patch("subprocess.Popen") as mock_popen,
+        mock.patch("typer.echo"),
+        mock.patch("tidycode.runner.executor.print_success") as mock_success,
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = iter(["line1\n", "line2\n"])
@@ -129,11 +126,11 @@ def test_run_command_live_failure():
     Expected:
         Returns SubprocessResult with failure status.
     """
-    with mock.patch("subprocess.Popen") as mock_popen, mock.patch(
-        "typer.echo"
-    ) as mock_echo, mock.patch(
-        "tidycode.runner.executor.print_error"
-    ) as mock_error:
+    with (
+        mock.patch("subprocess.Popen") as mock_popen,
+        mock.patch("typer.echo"),
+        mock.patch("tidycode.runner.executor.print_error") as mock_error,
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 1
         mock_process.stdout = iter(["error line\n"])
@@ -156,18 +153,17 @@ def test_run_command_live_with_cwd():
     Expected:
         Command runs in the specified directory.
     """
-    with mock.patch("subprocess.Popen") as mock_popen, mock.patch(
-        "typer.echo"
-    ) as mock_echo:
+    with (
+        mock.patch("subprocess.Popen") as mock_popen,
+        mock.patch("typer.echo"),
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = iter([])
         mock_process.wait.return_value = None
         mock_popen.return_value = mock_process
 
-        result = run_command_live(
-            ["pwd"], display_name="test", cwd=Path("/tmp")
-        )
+        run_command_live(["pwd"], display_name="test", cwd=Path("/tmp"))
 
         mock_popen.assert_called_once()
         call_args = mock_popen.call_args
@@ -227,9 +223,10 @@ def test_run_command_live_default_display_name():
     Expected:
         Uses command[0] as display name.
     """
-    with mock.patch("subprocess.Popen") as mock_popen, mock.patch(
-        "typer.echo"
-    ) as mock_echo:
+    with (
+        mock.patch("subprocess.Popen") as mock_popen,
+        mock.patch("typer.echo"),
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = iter([])
@@ -249,9 +246,10 @@ def test_run_command_is_tool_parameter():
     Expected:
         is_tool parameter is passed correctly to build_result.
     """
-    with mock.patch("subprocess.run") as mock_run, mock.patch(
-        "tidycode.runner.executor.build_result"
-    ) as mock_build_result:
+    with (
+        mock.patch("subprocess.run") as mock_run,
+        mock.patch("tidycode.runner.executor.build_result") as mock_build_result,
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = "output"
@@ -274,11 +272,11 @@ def test_run_command_live_is_tool_parameter():
     Expected:
         is_tool parameter is passed correctly to build_result.
     """
-    with mock.patch("subprocess.Popen") as mock_popen, mock.patch(
-        "typer.echo"
-    ) as mock_echo, mock.patch(
-        "tidycode.runner.executor.build_result"
-    ) as mock_build_result:
+    with (
+        mock.patch("subprocess.Popen") as mock_popen,
+        mock.patch("typer.echo"),
+        mock.patch("tidycode.runner.executor.build_result") as mock_build_result,
+    ):
         mock_process = mock.MagicMock()
         mock_process.returncode = 0
         mock_process.stdout = iter([])

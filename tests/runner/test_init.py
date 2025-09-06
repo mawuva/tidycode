@@ -6,9 +6,8 @@ from tidycode.runner import (
     CommandSpec,
     SubprocessDisplayMode,
     SubprocessResult,
-    print_summary
+    print_summary,
 )
-
 from tidycode.runner.subprocess import run_multiple_commands, run_plugins
 
 
@@ -95,8 +94,8 @@ def test_runner_module_import_consistency():
     from tidycode.runner.display import print_summary as display_print_summary
     from tidycode.runner.subprocess import (
         run_multiple_commands as subprocess_run_multiple_commands,
-        run_plugins as subprocess_run_plugins,
     )
+    from tidycode.runner.subprocess import run_plugins as subprocess_run_plugins
     from tidycode.runner.types import CommandSpec as types_CommandSpec
     from tidycode.runner.types import (
         SubprocessDisplayMode as types_SubprocessDisplayMode,

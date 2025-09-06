@@ -4,14 +4,12 @@ TidyCode Runner Subprocess Tests
 
 from unittest import mock
 
-from tidycode.runner.subprocess import run_multiple_commands, run_plugins
-from tidycode.runner.types import CommandSpec, SubprocessDisplayMode, SubprocessResult
+from tidycode.runner.subprocess import run_multiple_commands
+from tidycode.runner.types import CommandSpec, SubprocessDisplayMode
 
 # ---------------------------
 # Unit tests
 # ---------------------------
-
-
 
 
 # ---------------------------

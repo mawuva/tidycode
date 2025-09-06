@@ -3,7 +3,6 @@ Integration tests for quality module.
 """
 
 from pathlib import Path
-from unittest import mock
 
 from tidycode.modules.quality.black_runner import BlackRunner
 from tidycode.modules.quality.isort_runner import IsortRunner
