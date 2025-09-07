@@ -9,6 +9,7 @@ import typer
 from tidycode.runner.subprocess import run_plugins
 from tidycode.runner.types import SubprocessDisplayMode
 from tidycode.utils.printing import pretty_header
+from tidycode.settings import PrettyHeaderStyle
 
 app = typer.Typer(
     help="Run formatting, linting, and type checking tools (black, isort, ruff, mypy)",
@@ -26,8 +27,10 @@ def check_quality(
     ),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Show detailed output"),
     live: bool = typer.Option(True, "--live", "-l", help="Stream outputs live"),
-    summary_mode: Optional[SubprocessDisplayMode] = typer.Option(
+    mode: Optional[SubprocessDisplayMode] = typer.Option(
         SubprocessDisplayMode.TABLE_MINIMAL,
+        "--mode",
+        "-m",
         help="Summary display mode (TABLE_FULL, TABLE_MINIMAL, TEXT, LIST)",
     ),
 ) -> None:
@@ -36,7 +39,7 @@ def check_quality(
     """
     tool_list: Optional[List[str]] = tools.split(",") if tools else None
 
-    pretty_header("quality", "Running quality checks...", style="banner", err=True)
+    pretty_header("quality", "Running quality checks...", style=PrettyHeaderStyle.BANNER, err=True)
 
     run_plugins(
         category="quality",
@@ -44,7 +47,7 @@ def check_quality(
         check_only=check_only,
         live=live,
         verbose=verbose,
-        summary_display_mode=summary_mode,
+        summary_display_mode=mode,
     )
 
 
@@ -58,8 +61,10 @@ def style_quality(
     ),
     live: bool = typer.Option(True, "--live", "-l", help="Stream outputs live"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Show detailed output"),
-    summary_mode: Optional[SubprocessDisplayMode] = typer.Option(
+    mode: Optional[SubprocessDisplayMode] = typer.Option(
         SubprocessDisplayMode.TABLE_MINIMAL,
+        "--mode",
+        "-m",
         help="Summary display mode (TABLE_FULL, TABLE_MINIMAL, TEXT, LIST)",
     ),
 ) -> None:
@@ -72,7 +77,7 @@ def style_quality(
     )
 
     pretty_header(
-        scope="style", message="Running style checks...", style="banner", err=True
+        scope="style", message="Running style checks...", style=PrettyHeaderStyle.BANNER, err=True
     )
 
     run_plugins(
@@ -82,7 +87,7 @@ def style_quality(
         check_only=check_only,
         live=live,
         verbose=verbose,
-        summary_display_mode=summary_mode,
+        summary_display_mode=mode,
     )
 
 
@@ -96,8 +101,10 @@ def run_type_checking(
     ),
     live: bool = typer.Option(True, "--live", "-l", help="Stream outputs live"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Show detailed output"),
-    summary_mode: Optional[SubprocessDisplayMode] = typer.Option(
+    mode: Optional[SubprocessDisplayMode] = typer.Option(
         SubprocessDisplayMode.TABLE_MINIMAL,
+        "--mode",
+        "-m",
         help="Summary display mode (TABLE_FULL, TABLE_MINIMAL, TEXT, LIST)",
     ),
 ) -> None:
@@ -108,7 +115,7 @@ def run_type_checking(
     tool_list: Optional[List[str]] = tools.split(",") if tools else ["mypy"]
 
     pretty_header(
-        scope="type", message="Running type checking...", style="banner", err=True
+        scope="type", message="Running type checking...", style=PrettyHeaderStyle.BANNER, err=True
     )
 
     run_plugins(
@@ -118,5 +125,5 @@ def run_type_checking(
         check_only=check_only,
         live=live,
         verbose=verbose,
-        summary_display_mode=summary_mode,
+        summary_display_mode=mode,
     )

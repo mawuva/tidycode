@@ -47,7 +47,7 @@ target = "."
 cleanable_dirs = ["__pycache__", ".pytest_cache", ".ruff_cache", ".mypy_cache", ".tox", "build", "dist"]
 cleanable_files = [".coverage", "coverage.xml"]
 patterns = ["*.pyc", "*.log"]
-excludes = ["docs", "migrations"]
+excludes = ["docs", "migrations", ".venv", "venv", "env", ".env", ".git"]
 
 [tool.black]
 line-length = 88

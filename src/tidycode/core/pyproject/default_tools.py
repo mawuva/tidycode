@@ -41,6 +41,11 @@ DEFAULT_TOOLS_CONFIG: Dict[str, Dict[str, Any]] = {
                     "*.log",
                 ],
                 "excludes": [
+                    ".venv",
+                    "venv",
+                    "env",
+                    ".env",
+                    ".git",
                     "docs",
                     "migrations",
                 ],

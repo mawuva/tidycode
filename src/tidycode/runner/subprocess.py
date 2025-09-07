@@ -76,6 +76,19 @@ def run_plugins(
 ) -> None:
     """
     Run plugins.
+    
+    Args:
+        category: category of the plugins to run
+        scope: scope of the plugins to run
+        tools: list of tools to run
+        path: path to the target
+        check_only: if the plugins should run in check-only mode
+        live: if the plugins should run live
+        verbose: if the plugins should run verbose
+        dry_run: if the plugins should run in dry-run mode
+        summary_display_mode: display mode of the summary
+    Returns:
+        None
     """
 
     configs: dict = load_tidycode_config()

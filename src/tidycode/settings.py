@@ -24,3 +24,10 @@ class ToolsSupported(BaseEnum):
     ISORT = "isort"
     RUFF = "ruff"
     MYPY = "mypy"
+
+class PrettyHeaderStyle(BaseEnum):
+    """Pretty header style"""
+    BOX = "box"
+    FIGLET = "figlet"
+    BANNER = "banner"
+    ALERT = "alert"
